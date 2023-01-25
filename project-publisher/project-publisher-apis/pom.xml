@@ -6,18 +6,19 @@
 
     <parent>
         <groupId>com.project</groupId>
-        <artifactId>project</artifactId>
+        <artifactId>project-publisher</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>project-repositories</artifactId>
+    <artifactId>project-publisher-apis</artifactId>
     <version>0.0.1</version>
 
     <dependencies>
         <dependency>
             <groupId>com.project</groupId>
-            <artifactId>project-entities</artifactId>
+            <artifactId>project-publisher-services</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>
+
 </project>

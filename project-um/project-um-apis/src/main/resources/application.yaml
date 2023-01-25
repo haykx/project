@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: user-management
+
+#TODO: add flyway/db config
