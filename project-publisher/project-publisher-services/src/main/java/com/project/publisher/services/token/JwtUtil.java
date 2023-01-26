@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -17,8 +16,6 @@ import java.util.function.Function;
 public class JwtUtil {
   @Value("${jwt.secret}")
   private String secret;
-  @Value("${jwt.expiration}")
-  private Long expiration;
   public static String TOKEN_PREFIX = "Bearer ";
 
 
@@ -53,44 +50,44 @@ public class JwtUtil {
     return expiration.before(new Date());
   }
 
-  public <T extends PublisherPrincipal> Map<String, String> generateToken(T user) {
-    final Date createdDate = new Date();
-    final Date expirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24);
-    final Date refreshExpirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24*30);
-
-    Claims claims = Jwts.claims().setSubject(user.getUsername()).setId(user.getId().toString());
-    claims.put("permissions", user.getAuthorities());
-
-    String accessToken = Jwts.builder()
-      .setClaims(claims)
-      .setSubject(user.getUsername())
-      .setIssuedAt(createdDate)
-      .setExpiration(expirationDate)
-      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
-      .compact();
-
-    String refresh_token = Jwts.builder()
-      .setClaims(claims)
-      .setSubject(user.getUsername())
-      .setIssuedAt(createdDate)
-      .setExpiration(refreshExpirationDate)
-      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
-      .compact();
-
-    return Map.of(
-      "access_token", accessToken,
-      "refresh_token", refresh_token
-    );
-
-  }
+//  public <T extends PublisherPrincipal> Map<String, String> generateToken(T user) {
+//    final Date createdDate = new Date();
+//    final Date expirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24);
+//    final Date refreshExpirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24*30);
+//
+//    Claims claims = Jwts.claims().setSubject(user.getUsername()).setId(user.getId().toString());
+//    claims.put("permissions", user.getAuthorities());
+//
+//    String accessToken = Jwts.builder()
+//      .setClaims(claims)
+//      .setSubject(user.getUsername())
+//      .setIssuedAt(createdDate)
+//      .setExpiration(expirationDate)
+//      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+//      .compact();
+//
+//    String refresh_token = Jwts.builder()
+//      .setClaims(claims)
+//      .setSubject(user.getUsername())
+//      .setIssuedAt(createdDate)
+//      .setExpiration(refreshExpirationDate)
+//      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
+//      .compact();
+//
+//    return Map.of(
+//      "access_token", accessToken,
+//      "refresh_token", refresh_token
+//    );
+//
+//  }
   public Boolean validateToken(String token, String username) {
     final String usernameToken = getUsernameFromToken(token);
     return (usernameToken.equals(username) && !isTokenExpired(token));
   }
 
-  private Date calculateExpirationDate(Date createdDate, long multiplier) {
-    return new Date(createdDate.getTime() + expiration * multiplier);
-  }
+//  private Date calculateExpirationDate(Date createdDate, long multiplier) {
+//    return new Date(createdDate.getTime() + expiration * multiplier);
+//  }
 
   public UUID getIdFromToken(String token) {
     return getClaimFromToken(token, claims -> UUID.fromString((String) claims.get("id")));

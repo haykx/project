@@ -1,14 +1,11 @@
 package com.project.publisher.api.config;
 
 import com.project.publisher.api.entryPoint.JwtAuthEntryPoint;
-import com.project.publisher.api.filters.UserAuthenticationFilter;
 import com.project.publisher.api.filters.UserAuthorizationFilter;
 import com.project.publisher.services.token.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,17 +18,11 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-  private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
   private final JwtAuthEntryPoint entryPoint;
 
-  @Autowired
-  public SecurityConfig(@Lazy AuthenticationManager authenticationManager, JwtUtil jwtUtil, JwtAuthEntryPoint entryPoint) {
-    this.authenticationManager = authenticationManager;
-    this.jwtUtil = jwtUtil;
-    this.entryPoint = entryPoint;
-  }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -44,7 +35,6 @@ public class SecurityConfig {
             .exceptionHandling()
             .authenticationEntryPoint(entryPoint)
             .and()
-            .addFilter(new UserAuthenticationFilter(authenticationManager))
             .addFilterBefore(new UserAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
             .build();
   }
