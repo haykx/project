@@ -8,4 +8,7 @@ import java.util.UUID;
 
 @Repository
 public interface RolePermissionRepository extends JpaRepository<RolePermission, UUID> {
+    void deleteAllByPk_PermissionId(UUID id);
+
+    void deleteAllByPk_RoleId(UUID id);
 }

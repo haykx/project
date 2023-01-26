@@ -2,6 +2,7 @@ package com.project.um.services.publisher;
 
 import com.project.um.entities.Publisher;
 import com.project.um.repositories.PublisherRepository;
+import com.project.um.repositories.PublisherRoleRepository;
 import com.project.um.request.PublisherRequest;
 import com.project.um.request.PublisherUpdateDto;
 import com.project.um.response.PublisherResponse;
@@ -16,10 +17,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PublisherService implements UserService<PublisherRequest, PublisherResponse, PublisherUpdateDto> {
+public class PublisherService implements UserService {
 
     private final PublisherMapper mapper;
     private final PublisherRepository repository;
+    private final PublisherRoleRepository crossRepository;
     private final PasswordEncoder encoder;
 
     @Override
@@ -57,6 +59,7 @@ public class PublisherService implements UserService<PublisherRequest, Publisher
 
     @Override
     public void delete(UUID id) {
+        this.crossRepository.deleteAllByPk_PublisherId(id);
         this.repository.delete(id);
     }
 

@@ -12,11 +12,11 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/token")
 public class TokenEndpoint {
   private final JwtTokenService tokenService;
 
-  @GetMapping("/token")
+  @GetMapping
   public Map<String, String> updateExpiredTokenCustomerUser(){
     PublisherPrincipal principal  = (PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     return tokenService.generateTokens(principal.getUsername());

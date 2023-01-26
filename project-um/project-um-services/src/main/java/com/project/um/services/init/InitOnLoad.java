@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class InitOnLoad implements ApplicationListener<ApplicationStartedEvent> {
-
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
 

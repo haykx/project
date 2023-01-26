@@ -1,12 +1,12 @@
 package com.project.um.services.publisher;
 
-import java.util.List;
+import com.project.um.request.PublisherRequest;
+import com.project.um.request.PublisherUpdateDto;
+import com.project.um.response.PublisherResponse;
+import com.project.um.services.CrudService;
+
 import java.util.UUID;
 
-public interface UserService<Request, Response, Update> {
-    Response add(Request request);
-    Response update(UUID id, Update dto);
-    Response get(UUID id);
-    List<Response> get(List<UUID> ids);
-    void delete(UUID id);
+public interface UserService extends CrudService<PublisherRequest, PublisherResponse> {
+    PublisherResponse update(UUID id, PublisherUpdateDto dto);
 }

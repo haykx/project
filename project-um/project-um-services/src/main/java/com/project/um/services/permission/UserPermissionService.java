@@ -1,11 +1,9 @@
 package com.project.um.services.permission;
 
-import java.util.List;
-import java.util.UUID;
+import com.project.um.request.PermissionRequest;
+import com.project.um.response.PermissionResponse;
+import com.project.um.services.CrudService;
 
-public interface UserPermissionService<Request, Response> {
-    Response add(Request request);
-    Response get(UUID id);
-    List<Response> get(List<UUID> ids);
-    void delete(UUID id);
+public interface UserPermissionService extends CrudService<PermissionRequest, PermissionResponse>  {
+
 }
