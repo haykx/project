@@ -1,6 +1,6 @@
 package com.project.um.services.publisher;
 
-import com.project.um.entities.Publisher;
+import com.project.um.entities.UmPublisher;
 import com.project.um.reg.LoginRequest;
 import com.project.um.reg.PublisherPrincipal;
 import com.project.um.repositories.PublisherRepository;
@@ -26,11 +26,11 @@ public class PublisherLoginService implements LoginService<LoginRequest> {
 
     @Override
     public ResponseEntity<?> login(LoginRequest request) {
-        Publisher publisher = this.repository.findByEmailAndDeletedIsNull(request.getEmail()).orElseThrow();
-        if(!encoder.matches(request.getPassword(), publisher.getPassword())){
+        UmPublisher umPublisher = this.repository.findByEmailAndDeletedIsNull(request.getEmail()).orElseThrow();
+        if(!encoder.matches(request.getPassword(), umPublisher.getPassword())){
             throw new RuntimeException();
         }
-        PublisherPrincipal dto = this.mapper.toPrincipal(publisher);
+        PublisherPrincipal dto = this.mapper.toPrincipal(umPublisher);
         Map<String, String> tokens = jwtUtil.generateToken(dto);
         return new ResponseEntity<>(tokens, OK);
     }

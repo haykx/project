@@ -60,12 +60,12 @@ public class JwtUtil {
     final Date expirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24);
     final Date refreshExpirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24*30);
 
-    Claims claims = Jwts.claims().setSubject(user.getUsername()).setId(user.getId().toString());
+    Claims claims = Jwts.claims().setSubject(user.getEmail()).setId(user.getId().toString());
     claims.put("permissions", user.getAuthorities());
 
     String accessToken = Jwts.builder()
       .setClaims(claims)
-      .setSubject(user.getUsername())
+      .setSubject(user.getEmail())
       .setIssuedAt(createdDate)
       .setExpiration(expirationDate)
       .signWith(SignatureAlgorithm.HS256, secret.getBytes())
@@ -73,7 +73,7 @@ public class JwtUtil {
 
     String refresh_token = Jwts.builder()
       .setClaims(claims)
-      .setSubject(user.getUsername())
+      .setSubject(user.getEmail())
       .setIssuedAt(createdDate)
       .setExpiration(refreshExpirationDate)
       .signWith(SignatureAlgorithm.HS256, secret.getBytes())

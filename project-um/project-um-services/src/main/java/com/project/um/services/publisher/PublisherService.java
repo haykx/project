@@ -1,6 +1,6 @@
 package com.project.um.services.publisher;
 
-import com.project.um.entities.Publisher;
+import com.project.um.entities.UmPublisher;
 import com.project.um.repositories.PublisherRepository;
 import com.project.um.repositories.PublisherRoleRepository;
 import com.project.um.request.PublisherRequest;
@@ -31,20 +31,16 @@ public class PublisherService implements UserService {
 
     @Override
     public PublisherResponse update(UUID id, PublisherUpdateDto dto) {
-        Publisher publisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
-        Optional.ofNullable(dto.getFirstName()).ifPresent(publisher::setFirstName);
-        Optional.ofNullable(dto.getLastName()).ifPresent(publisher::setLastName);
+        UmPublisher umPublisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
         Optional.ofNullable(dto.getEmail()).ifPresent(email -> {
             if(!this.repository.existsByEmailAndDeletedIsNull(email)){
-                publisher.setEmail(email);
+                umPublisher.setEmail(email);
             }
         });
         Optional.ofNullable(dto.getPassword()).ifPresent(password -> {
-            publisher.setPassword(this.encoder.encode(password));
+            umPublisher.setPassword(this.encoder.encode(password));
         });
-        Optional.ofNullable(dto.getBio()).ifPresent(publisher::setBio);
-        Optional.ofNullable(dto.getAvatar()).ifPresent(publisher::setAvatar);
-        return this.mapper.toResponse(this.repository.save(publisher));
+        return this.mapper.toResponse(this.repository.save(umPublisher));
     }
 
     @Override

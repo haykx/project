@@ -1,6 +1,6 @@
 package com.project.um.services.publisher;
 
-import com.project.um.entities.Publisher;
+import com.project.um.entities.UmPublisher;
 import com.project.um.reg.PublisherPrincipal;
 import com.project.um.request.PublisherRequest;
 import com.project.um.response.PublisherResponse;
@@ -11,41 +11,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PublisherMapper implements Mapper<PublisherRequest, Publisher, PublisherResponse> {
+public class PublisherMapper implements Mapper<PublisherRequest, UmPublisher, PublisherResponse> {
     private final PasswordEncoder encoder;
     @Override
-    public Publisher toEntity(PublisherRequest request) {
-        Publisher publisher = new Publisher();
-        publisher.setFirstName(request.getFirstName());
-        publisher.setLastName(request.getLastName());
-        publisher.setEmail(request.getEmail());
-        publisher.setPassword(encoder.encode(request.getPassword()));
-        publisher.setBio(publisher.getBio());
-        publisher.setAvatar(request.getAvatar());
-        return publisher;
+    public UmPublisher toEntity(PublisherRequest request) {
+        UmPublisher umPublisher = new UmPublisher();
+        umPublisher.setEmail(request.getEmail());
+        umPublisher.setPassword(encoder.encode(request.getPassword()));
+        return umPublisher;
     }
 
     @Override
-    public PublisherResponse toResponse(Publisher publisher) {
+    public PublisherResponse toResponse(UmPublisher umPublisher) {
         PublisherResponse response = new PublisherResponse();
-        response.setId(publisher.getId());
-        response.setFirstName(publisher.getFirstName());
-        response.setLastName(publisher.getLastName());
-        response.setEmail(response.getEmail());
-        response.setBio(publisher.getBio());
-        response.setAvatar(response.getAvatar());
-        response.setCreated(response.getCreated());
-        response.setUpdated(response.getUpdated());
-        response.setDeleted(response.getDeleted());
+        response.setId(umPublisher.getId());
+        response.setEmail(umPublisher.getEmail());
+        response.setCreated(umPublisher.getCreated());
+        response.setUpdated(umPublisher.getUpdated());
+        response.setDeleted(umPublisher.getDeleted());
         return response;
     }
 
-    public PublisherPrincipal toPrincipal(Publisher publisher){
+    public PublisherPrincipal toPrincipal(UmPublisher umPublisher){
         PublisherPrincipal principal = new PublisherPrincipal();
-        principal.setId(publisher.getId());
-        principal.setEmail(publisher.getEmail());
-        principal.setPassword(publisher.getPassword());
-        principal.setRoles(publisher.getRoles());
+        principal.setId(umPublisher.getId());
+        principal.setEmail(umPublisher.getEmail());
+        principal.setRoles(umPublisher.getRoles());
         return principal;
     }
 }

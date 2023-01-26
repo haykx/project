@@ -19,6 +19,6 @@ public class TokenEndpoint {
   @GetMapping
   public Map<String, String> updateExpiredTokenCustomerUser(){
     PublisherPrincipal principal  = (PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return tokenService.generateTokens(principal.getUsername());
+    return tokenService.generateTokens(principal.getEmail());
   }
 }

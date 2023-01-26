@@ -32,7 +32,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     LoginRequest dto = (LoginRequest) request;
     String email = dto.getEmail();
     String password = dto.getPassword();
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(new PublisherPrincipal(null, email, null), password);
     return authenticationManager.authenticate(authenticationToken);
   }
 

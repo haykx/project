@@ -18,22 +18,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_publishers")
-public class Publisher extends BaseEntity{
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
+public class UmPublisher extends BaseEntity{
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "bio")
-    private String bio;
-
-    @Column(name = "avatar")
-    private byte[] avatar;
 
     @ManyToMany
     @JoinTable(
