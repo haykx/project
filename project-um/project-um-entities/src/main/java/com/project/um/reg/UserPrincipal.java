@@ -1,9 +1,7 @@
 package com.project.um.reg;
 
-import java.util.Set;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public interface UserPrincipal {
+public interface UserPrincipal extends UserDetails {
 
-  Set<String> getAuthorities();
-  String getEmail();
 }

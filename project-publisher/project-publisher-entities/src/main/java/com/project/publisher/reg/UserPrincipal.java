@@ -1,5 +1,7 @@
 package com.project.publisher.reg;
 
-public interface UserPrincipal {
-  String getUsername();
+import org.springframework.security.core.userdetails.UserDetails;
+
+public interface UserPrincipal extends UserDetails {
+
 }

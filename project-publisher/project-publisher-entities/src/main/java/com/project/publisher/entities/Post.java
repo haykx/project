@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.net.URL;
-
 @Entity
 @Getter
 @Setter
@@ -28,12 +26,15 @@ public class Post extends BaseEntity {
     private String body;
 
     @Column(name = "link")
-    private URL link;
+    private String link;
+
+    @Column(name = "likes")
+    private int likes;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
 
-    //TODO: discuss the possibility of having comments and/or likes
+    //TODO: implement like system
 
 }

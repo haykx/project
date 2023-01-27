@@ -3,14 +3,19 @@ package com.project.publisher.services.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.project.publisher.reg.PublisherPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -18,21 +23,26 @@ public class JwtUtil {
   private String secret;
   public static String TOKEN_PREFIX = "Bearer ";
 
+  public PublisherPrincipal getPrincipalFromToken(String token){
+    UUID id = this.getIdFromToken(token);
+    String username = this.getUsernameFromToken(token);
+    Set<SimpleGrantedAuthority> permissions = this.getClaimFromToken(token, claims -> (List<String>) claims.get("permissions")).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+    return new PublisherPrincipal(id, username, null, permissions);
+  }
 
-
-  public String getUsernameFromToken(String token) {
+  private String getUsernameFromToken(String token) {
     return getClaimFromToken(token, Claims::getSubject);
   }
 
-  public DecodedJWT decode(String token){
+  private DecodedJWT decode(String token){
     return JWT.require(Algorithm.HMAC256(secret.getBytes())).build().verify(token);
   }
 
-  public Date getExpirationDateFromToken(String token) {
+  private Date getExpirationDateFromToken(String token) {
     return getClaimFromToken(token, Claims::getExpiration);
   }
 
-  public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+  private  <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = getAllClaimsFromToken(token);
     return claimsResolver.apply(claims);
   }
@@ -89,7 +99,7 @@ public class JwtUtil {
 //    return new Date(createdDate.getTime() + expiration * multiplier);
 //  }
 
-  public UUID getIdFromToken(String token) {
+  private UUID getIdFromToken(String token) {
     return getClaimFromToken(token, claims -> UUID.fromString((String) claims.get("id")));
   }
 }

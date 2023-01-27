@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
-public class SortedQuery {
+public abstract class SortedQuery {
     private List<String> sortingFields;
 
     public Sort getSort() {
