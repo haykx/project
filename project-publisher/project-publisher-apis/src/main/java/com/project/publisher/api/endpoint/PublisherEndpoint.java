@@ -50,6 +50,4 @@ public class PublisherEndpoint {
     public void delete(@RequestParam("id")UUID id){
         this.service.delete(id);
     }
-
-
 }

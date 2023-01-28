@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/publishers")
+@RequestMapping("/publisher")
 public class PublisherEndpoint {
     private final PublisherService service;
 
