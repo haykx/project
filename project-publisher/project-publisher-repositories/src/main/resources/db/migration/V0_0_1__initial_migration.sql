@@ -14,14 +14,15 @@ CREATE table t_publisher
 );
 CREATE TABLE t_posts
 (
-    id       UUID          NOT NULL,
-    headline VARCHAR(70)   NOT NULL,
-    image    BYTEA         NOT NULL,
-    body     VARCHAR(1000) NOT NULL,
-    link     VARCHAR(40)   NOT NULL,
-    created  TIMESTAMP     NOT NULL,
-    updated  TIMESTAMP     NOT NULL,
-    deleted  TIMESTAMP     NOT NULL,
+    id           UUID          NOT NULL,
+    headline     VARCHAR(70)   NOT NULL,
+    image        BYTEA         NOT NULL,
+    body         VARCHAR(1000) NOT NULL,
+    link         VARCHAR(40)   NOT NULL,
+    publisher_id UUID          NOT NULL REFERENCES t_publisher (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    created      TIMESTAMP     NOT NULL,
+    updated      TIMESTAMP     NOT NULL,
+    deleted      TIMESTAMP     NOT NULL,
 
     PRIMARY KEY (id)
 );
