@@ -1,8 +1,5 @@
 package com.project.publisher.services.token;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.project.publisher.reg.PublisherPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,83 +20,46 @@ public class JwtUtil {
   private String secret;
   public static String TOKEN_PREFIX = "Bearer ";
 
-  public PublisherPrincipal getPrincipalFromToken(String token){
-    UUID id = this.getIdFromToken(token);
-    String username = this.getUsernameFromToken(token);
-    Set<SimpleGrantedAuthority> permissions = this.getClaimFromToken(token, claims -> (List<String>) claims.get("permissions")).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+  public PublisherPrincipal getPrincipalFromToken(final String token){
+    final Claims claims = getAllClaimsFromToken(token);
+    if(this.isTokenExpired(claims)){
+      throw new RuntimeException();
+    }
+    final UUID id = UUID.fromString(this.getIdFromToken(claims));
+    final String username = this.getUsernameFromToken(claims);
+    final Set<SimpleGrantedAuthority> permissions = this.getPermissions(claims);
     return new PublisherPrincipal(id, username, null, permissions);
   }
 
-  private String getUsernameFromToken(String token) {
-    return getClaimFromToken(token, Claims::getSubject);
+  private Set<SimpleGrantedAuthority> getPermissions(final Claims claims) {
+    return this.getClaimFromToken(claims, c -> (List<String>) c.get("permissions")).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
   }
 
-  private DecodedJWT decode(String token){
-    return JWT.require(Algorithm.HMAC256(secret.getBytes())).build().verify(token);
+  private String getUsernameFromToken(final Claims claims) {
+    return getClaimFromToken(claims, Claims::getSubject);
   }
 
-  private Date getExpirationDateFromToken(String token) {
-    return getClaimFromToken(token, Claims::getExpiration);
+  private Date getExpirationDateFromToken(final Claims claims) {
+    return getClaimFromToken(claims, Claims::getExpiration);
   }
 
-  private  <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = getAllClaimsFromToken(token);
+  private  <T> T getClaimFromToken(final Claims claims, final Function<Claims, T> claimsResolver) {
     return claimsResolver.apply(claims);
   }
 
-  private Claims getAllClaimsFromToken(String token) {
+  private Claims getAllClaimsFromToken(final String token) {
     return Jwts.parser()
-      .setSigningKey(secret.getBytes())
+      .setSigningKey("secret".getBytes())
       .parseClaimsJws(token)
       .getBody();
   }
 
-  private Boolean isTokenExpired(String token) {
-    final Date expiration = getExpirationDateFromToken(token);
-
+  private Boolean isTokenExpired(final Claims claims) {
+    final Date expiration = getExpirationDateFromToken(claims);
     return expiration.before(new Date());
   }
 
-//  public <T extends PublisherPrincipal> Map<String, String> generateToken(T user) {
-//    final Date createdDate = new Date();
-//    final Date expirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24);
-//    final Date refreshExpirationDate = calculateExpirationDate(createdDate, 1000L*60*60*24*30);
-//
-//    Claims claims = Jwts.claims().setSubject(user.getUsername()).setId(user.getId().toString());
-//    claims.put("permissions", user.getAuthorities());
-//
-//    String accessToken = Jwts.builder()
-//      .setClaims(claims)
-//      .setSubject(user.getUsername())
-//      .setIssuedAt(createdDate)
-//      .setExpiration(expirationDate)
-//      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
-//      .compact();
-//
-//    String refresh_token = Jwts.builder()
-//      .setClaims(claims)
-//      .setSubject(user.getUsername())
-//      .setIssuedAt(createdDate)
-//      .setExpiration(refreshExpirationDate)
-//      .signWith(SignatureAlgorithm.HS256, secret.getBytes())
-//      .compact();
-//
-//    return Map.of(
-//      "access_token", accessToken,
-//      "refresh_token", refresh_token
-//    );
-//
-//  }
-  public Boolean validateToken(String token, String username) {
-    final String usernameToken = getUsernameFromToken(token);
-    return (usernameToken.equals(username) && !isTokenExpired(token));
-  }
-
-//  private Date calculateExpirationDate(Date createdDate, long multiplier) {
-//    return new Date(createdDate.getTime() + expiration * multiplier);
-//  }
-
-  private UUID getIdFromToken(String token) {
-    return getClaimFromToken(token, claims -> UUID.fromString((String) claims.get("id")));
+  private String getIdFromToken(final Claims claims) {
+    return getClaimFromToken(claims, Claims::getId);
   }
 }
