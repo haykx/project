@@ -6,7 +6,6 @@ import com.project.publisher.response.PublisherResponse;
 import com.project.publisher.services.publisher.PublisherService;
 import com.project.publisher.services.query.PublisherQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/publisher")
 public class PublisherEndpoint {
@@ -27,7 +27,7 @@ public class PublisherEndpoint {
     private final PublisherService service;
 
     @PostMapping
-    public PublisherResponse add(@RequestBody PublisherRequest request){
+    public PublisherResponse add(@RequestBody(required = false) PublisherRequest request){
         return this.service.add(request);
     }
 
