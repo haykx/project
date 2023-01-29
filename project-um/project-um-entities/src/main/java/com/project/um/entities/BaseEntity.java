@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @Setter
 @MappedSuperclass
 @NoArgsConstructor
-@EqualsAndHashCode
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(generator = "UUID")

@@ -3,34 +3,33 @@ package com.project.um.api.config;
 import com.project.um.api.entryPoint.JwtAuthEntryPoint;
 import com.project.um.api.filters.UserAuthenticationFilter;
 import com.project.um.api.filters.UserAuthorizationFilter;
+import com.project.um.services.details.PublisherUserDetailsService;
 import com.project.um.services.token.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
+@EnableAutoConfiguration(exclude=ErrorMvcAutoConfiguration.class)
 public class SecurityConfig {
-  private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
   private final JwtAuthEntryPoint entryPoint;
-
-  @Autowired
-  public SecurityConfig(@Lazy AuthenticationManager authenticationManager, JwtUtil jwtUtil, JwtAuthEntryPoint entryPoint) {
-    this.authenticationManager = authenticationManager;
-    this.jwtUtil = jwtUtil;
-    this.entryPoint = entryPoint;
-  }
+  private final DaoAuthenticationProvider authProvider;
+  private final PublisherUserDetailsService userDetailsService;
+  private final PasswordEncoder encoder;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -40,11 +39,18 @@ public class SecurityConfig {
             .sessionManagement()
             .sessionCreationPolicy(STATELESS)
             .and()
+            .authorizeHttpRequests()
+//            .requestMatchers(POST, "**/publisher")
+//            .permitAll()
+            .anyRequest()
+            .permitAll()
+            .and()
             .exceptionHandling()
             .authenticationEntryPoint(entryPoint)
             .and()
-            .addFilter(new UserAuthenticationFilter(authenticationManager))
-            .addFilterBefore(new UserAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+            .authenticationProvider(authProvider)
+            .addFilter(new UserAuthenticationFilter(jwtUtil, userDetailsService, encoder))
+            .addFilterBefore(new UserAuthorizationFilter(jwtUtil), UserAuthenticationFilter.class)
             .build();
   }
 }

@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface PublisherRepository extends JpaRepository<UmPublisher, UUID> {
-    @Query("SELECT UmPublisher FROM UmPublisher p WHERE p.email = :email AND p.deleted IS NULL ")
-    Optional<UmPublisher> findByEmailAndDeletedIsNull(@Param("email")String email);
+//    @Query("SELECT UmPublisher FROM UmPublisher p WHERE p.email = :email AND p.deleted IS NULL ")
+    Optional<UmPublisher> findByEmailAndDeletedIsNull(String email);
 
     @Query("SELECT UmPublisher FROM UmPublisher p WHERE p.id = :id")
     Optional<UmPublisher> findByIdAndDeletedIsNull(@Param("id")UUID id);

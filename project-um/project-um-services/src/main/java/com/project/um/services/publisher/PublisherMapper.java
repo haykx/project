@@ -36,6 +36,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, UmPublisher, Pu
         PublisherPrincipal principal = new PublisherPrincipal();
         principal.setId(umPublisher.getId());
         principal.setEmail(umPublisher.getEmail());
+        principal.setPassword(umPublisher.getPassword());
         principal.setRoles(umPublisher.getRoles());
         return principal;
     }

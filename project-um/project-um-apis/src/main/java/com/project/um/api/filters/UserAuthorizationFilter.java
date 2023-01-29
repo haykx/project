@@ -19,6 +19,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RequiredArgsConstructor
 public class UserAuthorizationFilter extends OncePerRequestFilter {
+
   private final JwtUtil jwtUtil;
 
   @Override
