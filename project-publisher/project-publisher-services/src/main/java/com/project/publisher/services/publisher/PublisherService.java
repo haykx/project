@@ -1,6 +1,7 @@
 package com.project.publisher.services.publisher;
 
 import com.project.publisher.entities.Publisher;
+import com.project.publisher.reg.PublisherPrincipal;
 import com.project.publisher.repositories.PublisherRepository;
 import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.request.PublisherUpdateDto;
@@ -9,6 +10,7 @@ import com.project.publisher.services.query.PublisherQuery;
 import com.project.publisher.services.specification.PublisherSpecificationBuilder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,13 @@ public class PublisherService implements UserService {
 
     @Override
     public PublisherResponse add(PublisherRequest request) {
+        PublisherPrincipal principal = (PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(this.repository.existsByOriginalIdAndDeletedIsNull(principal.getId())){
+            return this.mapper.toResponse(this.repository.findByOriginalIdAndDeletedIsNull(principal.getId()).orElseThrow());
+        }
+        if (request == null) {
+            throw new RuntimeException();
+        }
         return this.mapper.toResponse(this.repository.save(this.mapper.toEntity(request)));
     }
 

@@ -30,7 +30,7 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(TOKEN_PREFIX.length());
         PublisherPrincipal principal = jwtUtil.getPrincipalFromToken(token);
         UsernamePasswordAuthenticationToken authenticationToken
-          = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
+          = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
       }

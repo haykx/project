@@ -1,17 +1,17 @@
 package com.project.publisher.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.publisher.entities.Publisher;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PostResponse extends BaseResponse {
     private String headline;
-    private byte[] image;
+    private String image;
     private String body;
     private String link;
-    @JsonIgnore
-    private Publisher publisher;
+    private int likes;
+    private UUID publisherId;
 }
