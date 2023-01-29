@@ -60,6 +60,6 @@ public class PublisherPrincipal implements UserDetails {
     }
 
     public void setRoles(Collection<Role> roles){
-        this.authorities = roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
+        this.authorities = roles.stream().flatMap(r -> r.getPermissions().stream()).map(p -> new SimpleGrantedAuthority(p.getName())).collect(Collectors.toSet());
     }
 }
