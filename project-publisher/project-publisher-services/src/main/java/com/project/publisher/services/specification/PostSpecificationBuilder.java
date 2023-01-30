@@ -11,7 +11,7 @@ public class PostSpecificationBuilder implements SpecificationService<Post> {
         return this.eqNull("deleted");
     }
 
-    public Specification<Post> searchPosts(PostQuery query){
+    public Specification<Post> searchPosts(final PostQuery query){
         return this.basicSpecification()
                 .and(iLikeSpecification(query.getHeadline(), "headline"))
                 .and(inRange(query.getPostedDateMin(), query.getPostedDateMax(), "created"));

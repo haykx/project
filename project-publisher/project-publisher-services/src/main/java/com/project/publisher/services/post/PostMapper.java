@@ -20,7 +20,7 @@ public class PostMapper implements Mapper<PostRequest, Post, PostResponse> {
     private final PublisherRepository publisherRepository;
 
     @Override
-    public Post toEntity(PostRequest request) {
+    public Post toEntity(final PostRequest request) {
         Post post = new Post();
         post.setPublisher(this.getPublisher(request));
         post.setHeadline(request.getHeadline());
@@ -31,12 +31,12 @@ public class PostMapper implements Mapper<PostRequest, Post, PostResponse> {
         return post;
     }
 
-    private Publisher getPublisher(PostRequest request) {
+    private Publisher getPublisher(final PostRequest request) {
         return this.publisherRepository.findByIdAndDeletedIsNull(request.getPublisherId()).orElseThrow();
     }
 
     @Override
-    public PostResponse toResponse(Post post) {
+    public PostResponse toResponse(final Post post) {
         PostResponse response = new PostResponse();
         response.setId(post.getId());
         response.setHeadline(post.getHeadline());

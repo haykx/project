@@ -18,12 +18,12 @@ public class PostLikeEndpoint {
 
 
     @PostMapping("/{id}/like")
-    public ResponseEntity<?> like(@PathVariable("id") UUID id){
+    public ResponseEntity<?> like(@PathVariable("id")final UUID id){
         return this.likeService.like(id);
     }
 
     @PostMapping("/{id}/unlike")
-    public ResponseEntity<?> unlike(@PathVariable("id")UUID id){
+    public ResponseEntity<?> unlike(@PathVariable("id")final UUID id){
         return this.likeService.unlike(id);
     }
 }

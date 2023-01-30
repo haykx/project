@@ -26,27 +26,27 @@ public class PostEndpoint {
     private final PostService service;
 
     @PostMapping
-    public PostResponse add(@RequestBody PostRequest request){
+    public PostResponse add(@RequestBody final PostRequest request){
         return this.service.add(request);
     }
 
     @GetMapping("/{id}")
-    public PostResponse get(@PathVariable("id")UUID id){
+    public PostResponse get(@PathVariable("id")final UUID id){
         return this.service.get(id);
     }
 
     @GetMapping
-    public List<PostResponse> search(PostQuery query){
+    public List<PostResponse> search(final PostQuery query){
         return this.service.search(query);
     }
 
     @PatchMapping
-    public PostResponse update(@RequestParam("id")UUID id, @RequestBody PostUpdateDto dto){
+    public PostResponse update(@RequestParam("id")final UUID id, @RequestBody PostUpdateDto dto){
         return this.service.update(id, dto);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam("id")UUID id){
+    public void delete(@RequestParam("id")final UUID id){
         this.service.delete(id);
     }
 }

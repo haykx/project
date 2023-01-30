@@ -20,7 +20,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
     private final PostMapper postMapper;
 
     @Override
-    public Publisher toEntity(PublisherRequest request) {
+    public Publisher toEntity(final PublisherRequest request) {
         Publisher publisher = new Publisher();
         publisher.setFirstName(request.getFirstName());
         publisher.setLastName(request.getLastName());
@@ -32,7 +32,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
 
 
     @Override
-    public PublisherResponse toResponse(Publisher publisher) {
+    public PublisherResponse toResponse(final Publisher publisher) {
         PublisherResponse response = new PublisherResponse();
         response.setId(publisher.getId());
         response.setFirstName(publisher.getFirstName());

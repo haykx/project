@@ -27,27 +27,27 @@ public class PublisherEndpoint {
     private final PublisherService service;
 
     @PostMapping
-    public PublisherResponse add(@RequestBody(required = false) PublisherRequest request){
+    public PublisherResponse add(@RequestBody(required = false)final PublisherRequest request){
         return this.service.add(request);
     }
 
     @GetMapping("/{id}")
-    public PublisherResponse get(@PathVariable("id")UUID id){
+    public PublisherResponse get(@PathVariable("id")final UUID id){
         return this.service.get(id);
     }
 
     @GetMapping
-    public List<PublisherResponse> search(PublisherQuery query){
+    public List<PublisherResponse> search(final PublisherQuery query){
         return this.service.search(query);
     }
 
     @PatchMapping
-    public PublisherResponse update(@RequestParam("id")UUID id, @RequestBody PublisherUpdateDto dto){
+    public PublisherResponse update(@RequestParam("id")final UUID id, @RequestBody PublisherUpdateDto dto){
         return this.service.update(id, dto);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam("id")UUID id){
+    public void delete(@RequestParam("id")final UUID id){
         this.service.delete(id);
     }
 }

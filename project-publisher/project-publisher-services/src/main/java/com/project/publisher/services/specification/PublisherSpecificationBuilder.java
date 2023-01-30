@@ -12,7 +12,19 @@ public class PublisherSpecificationBuilder implements SpecificationService<Publi
     }
 
     public Specification<Publisher> searchPublishers(PublisherQuery query){
-        return this.basicSpecification()
-                .and(iLikeSpecification(query.getFullName(), "first_name"+"last_mame"));
+        String[] s = query.getFullName().split(" ");
+        if(s.length == 2){
+            return this.basicSpecification()
+                    .and(iLikeSpecification(s[0], "first_name"))
+                    .and(iLikeSpecification(s[1], "last_name"))
+                    .or(iLikeSpecification(s[1], "first_name"))
+                    .and(iLikeSpecification(s[0], "last_name"));
+        } else if (s.length == 1) {
+            return this.basicSpecification()
+                    .and(iLikeSpecification(s[0], "first_name"))
+                    .or(iLikeSpecification(s[0], "last_name"));
+        } else {
+            throw new RuntimeException();
+        }
     }
 }

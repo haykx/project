@@ -25,19 +25,19 @@ public class PostService implements PublicationService {
     private final PostMapper mapper;
 
     @Override
-    public PostResponse add(PostRequest request) {
+    public PostResponse add(final PostRequest request) {
         return this.mapper.toResponse(this.repository.save(this.mapper.toEntity(request)));
     }
 
     @Override
-    public PostResponse get(UUID id) {
+    public PostResponse get(final UUID id) {
         return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
     }
 
 
     @Override
     @Transactional
-    public List<PostResponse> search(PostQuery query) {
+    public List<PostResponse> search(final PostQuery query) {
         return this.repository.findAll(
                 specificationBuilder.searchPosts(query),
                 query.getPageable()
@@ -46,7 +46,7 @@ public class PostService implements PublicationService {
 
     @Override
     @Transactional
-    public PostResponse update(UUID id, PostUpdateDto dto) {
+    public PostResponse update(final UUID id, final PostUpdateDto dto) {
         Post post = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
         Optional.ofNullable(dto.getHeadline()).ifPresent(post::setHeadline);
         Optional.ofNullable(dto.getHeadline()).ifPresent(post::setHeadline);
@@ -56,7 +56,7 @@ public class PostService implements PublicationService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(final UUID id) {
         this.repository.delete(id);
     }
 }

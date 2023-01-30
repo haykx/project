@@ -15,7 +15,7 @@ public class PostLikeService {
 
     private final PostRepository repository;
 
-    public ResponseEntity<?> like(UUID id){
+    public ResponseEntity<?> like(final UUID id){
         try{
            this.repository.like(id);
            return ResponseEntity.ok().build();
@@ -24,7 +24,7 @@ public class PostLikeService {
         }
     }
 
-    public ResponseEntity<?> unlike(UUID id){
+    public ResponseEntity<?> unlike(final UUID id){
         try{
             this.repository.unlike(id);
             return ResponseEntity.ok().build();

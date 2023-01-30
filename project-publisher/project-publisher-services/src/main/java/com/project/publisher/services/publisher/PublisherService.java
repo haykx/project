@@ -27,7 +27,7 @@ public class PublisherService implements UserService {
     private final PublisherRepository repository;
 
     @Override
-    public PublisherResponse add(PublisherRequest request) {
+    public PublisherResponse add(final PublisherRequest request) {
         PublisherPrincipal principal = (PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(this.repository.existsByOriginalIdAndDeletedIsNull(principal.getId())){
             return this.mapper.toResponse(this.repository.findByOriginalIdAndDeletedIsNull(principal.getId()).orElseThrow());
@@ -39,13 +39,13 @@ public class PublisherService implements UserService {
     }
 
     @Override
-    public PublisherResponse get(UUID id) {
+    public PublisherResponse get(final UUID id) {
         return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
     }
 
     @Override
     @Transactional
-    public PublisherResponse update(UUID id, PublisherUpdateDto dto) {
+    public PublisherResponse update(final UUID id, final PublisherUpdateDto dto) {
         Publisher publisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
         Optional.ofNullable(dto.getFirstName()).ifPresent(publisher::setFirstName);
         Optional.ofNullable(dto.getLastName()).ifPresent(publisher::setLastName);
@@ -56,7 +56,7 @@ public class PublisherService implements UserService {
 
     @Override
     @Transactional
-    public List<PublisherResponse> search(PublisherQuery query) {
+    public List<PublisherResponse> search(final PublisherQuery query) {
         return this.repository.findAll(
                 specificationBuilder.searchPublishers(query),
                 query.getPageable()
@@ -64,7 +64,7 @@ public class PublisherService implements UserService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(final UUID id) {
         this.repository.delete(id);
     }
 }

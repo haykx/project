@@ -49,7 +49,7 @@ public class JwtUtil {
 
   private Claims getAllClaimsFromToken(final String token) {
     return Jwts.parser()
-      .setSigningKey("secret".getBytes())
+      .setSigningKey(secret.getBytes())
       .parseClaimsJws(token)
       .getBody();
   }
