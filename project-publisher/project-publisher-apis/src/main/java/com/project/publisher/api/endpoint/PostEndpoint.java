@@ -31,7 +31,7 @@ public class PostEndpoint {
     }
 
     @GetMapping("/{id}")
-    public PostResponse get(@PathVariable UUID id){
+    public PostResponse get(@PathVariable("id")UUID id){
         return this.service.get(id);
     }
 

@@ -156,6 +156,20 @@
         <p>Request params - id<br>
         <p>Response - none</p>
     </li>
+    <li>
+        <a>http://localhost:8040/api/v1/post/{id}/like</a>
+        <p>Mapping - POST</p>
+        <p>Description - Like a post</p>
+        <p>Path Variable - id</p>
+        <p>Response - none</p>
+    </li>
+    <li>
+        <a>http://localhost:8040/api/v1/post/{id}/unlike</a>
+        <p>Mapping - POST</p>
+        <p>Description - Unlike a post</p>
+        <p>Path Variable - id</p>
+        <p>Response - none</p>
+    </li>
 </ol>
 
 

@@ -21,4 +21,11 @@ public interface PostRepository extends JpaRepository<Post, UUID>, JpaSpecificat
     @Query("UPDATE Post p SET p.deleted = CURRENT_TIMESTAMP WHERE p.id=:id AND p.deleted IS NULL")
     void delete(@Param("id")UUID id);
 
+    @Modifying
+    @Query("UPDATE Post p SET p.likes=p.likes+1, p.updated = CURRENT_TIMESTAMP WHERE p.id = :id AND p.deleted IS NULL")
+    void like(@Param("id")UUID id);
+
+    @Modifying
+    @Query("UPDATE Post p SET p.likes=p.likes-1, p.updated = CURRENT_TIMESTAMP WHERE p.likes > 0 AND p.id = :id AND p.deleted IS NULL")
+    void unlike(@Param("id")UUID id);
 }
