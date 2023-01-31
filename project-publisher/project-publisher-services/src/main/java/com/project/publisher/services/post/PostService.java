@@ -5,6 +5,7 @@ import com.project.publisher.repositories.PostRepository;
 import com.project.publisher.request.PostRequest;
 import com.project.publisher.request.PostUpdateDto;
 import com.project.publisher.response.PostResponse;
+import com.project.publisher.services.exceptions.NotFoundException;
 import com.project.publisher.services.query.PostQuery;
 import com.project.publisher.services.specification.PostSpecificationBuilder;
 import jakarta.transaction.Transactional;
@@ -31,7 +32,7 @@ public class PostService implements PublicationService {
 
     @Override
     public PostResponse get(final UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
+        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
     }
 
 

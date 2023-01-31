@@ -1,6 +1,7 @@
 package com.project.publisher.services.specification;
 
 import com.project.publisher.entities.Publisher;
+import com.project.publisher.services.exceptions.BadRequestException;
 import com.project.publisher.services.query.PublisherQuery;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class PublisherSpecificationBuilder implements SpecificationService<Publi
                     .and(iLikeSpecification(s[0], "first_name"))
                     .or(iLikeSpecification(s[0], "last_name"));
         } else {
-            throw new RuntimeException();
+            throw new BadRequestException("Invalid search parameters");
         }
     }
 }

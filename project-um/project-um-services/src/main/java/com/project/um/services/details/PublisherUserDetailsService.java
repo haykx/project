@@ -1,6 +1,7 @@
 package com.project.um.services.details;
 
 import com.project.um.repositories.PublisherRepository;
+import com.project.um.services.exceptions.NotFoundException;
 import com.project.um.services.publisher.PublisherMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,6 @@ public class PublisherUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.mapper.toPrincipal(this.repository.findByEmailAndDeletedIsNull(username).orElseThrow());
+        return this.mapper.toPrincipal(this.repository.findByEmailAndDeletedIsNull(username).orElseThrow(()->new NotFoundException(username)));
     }
 }

@@ -1,6 +1,7 @@
 package com.project.publisher.services.token;
 
 import com.project.publisher.reg.PublisherPrincipal;
+import com.project.publisher.services.exceptions.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ public class JwtUtil {
   public PublisherPrincipal getPrincipalFromToken(final String token){
     final Claims claims = getAllClaimsFromToken(token);
     if(this.isTokenExpired(claims)){
-      throw new RuntimeException();
+      throw new TokenExpiredException();
     }
     final UUID id = UUID.fromString(this.getIdFromToken(claims));
     final String username = this.getUsernameFromToken(claims);

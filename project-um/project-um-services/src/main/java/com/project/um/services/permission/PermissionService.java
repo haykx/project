@@ -4,6 +4,7 @@ import com.project.um.repositories.PermissionRepository;
 import com.project.um.repositories.RolePermissionRepository;
 import com.project.um.request.PermissionRequest;
 import com.project.um.response.PermissionResponse;
+import com.project.um.services.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class PermissionService implements UserPermissionService {
 
     @Override
     public PermissionResponse get(UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
+        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
     }
 
     @Override

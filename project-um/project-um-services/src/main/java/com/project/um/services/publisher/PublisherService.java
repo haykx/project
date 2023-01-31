@@ -6,6 +6,7 @@ import com.project.um.repositories.PublisherRoleRepository;
 import com.project.um.request.PublisherRequest;
 import com.project.um.request.PublisherUpdateDto;
 import com.project.um.response.PublisherResponse;
+import com.project.um.services.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PublisherService implements UserService {
 
     @Override
     public PublisherResponse update(UUID id, PublisherUpdateDto dto) {
-        UmPublisher umPublisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
+        UmPublisher umPublisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id));
         Optional.ofNullable(dto.getEmail()).ifPresent(email -> {
             if(!this.repository.existsByEmailAndDeletedIsNull(email)){
                 umPublisher.setEmail(email);
@@ -45,7 +46,7 @@ public class PublisherService implements UserService {
 
     @Override
     public PublisherResponse get(UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
+        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
     }
 
     @Override

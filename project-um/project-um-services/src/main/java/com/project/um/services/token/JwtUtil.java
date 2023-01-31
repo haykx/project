@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.project.um.reg.PublisherPrincipal;
+import com.project.um.services.exceptions.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,7 +33,7 @@ public class JwtUtil {
   public PublisherPrincipal getPrincipalFromToken(String token){
     final Claims claims = this.getAllClaimsFromToken(token);
     if (this.isTokenExpired(claims)){
-      throw new RuntimeException();
+      throw new TokenExpiredException();
     }
     final UUID id = this.getIdFromToken(claims);
     final String username = this.getUsernameFromToken(claims);

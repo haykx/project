@@ -6,6 +6,7 @@ import com.project.publisher.repositories.PublisherRepository;
 import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.request.PublisherUpdateDto;
 import com.project.publisher.response.PublisherResponse;
+import com.project.publisher.services.exceptions.BadRequestException;
 import com.project.publisher.services.query.PublisherQuery;
 import com.project.publisher.services.specification.PublisherSpecificationBuilder;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class PublisherService implements UserService {
             return this.mapper.toResponse(this.repository.findByOriginalIdAndDeletedIsNull(principal.getId()).orElseThrow());
         }
         if (request == null) {
-            throw new RuntimeException();
+            throw new BadRequestException("Invalid request");
         }
         return this.mapper.toResponse(this.repository.save(this.mapper.toEntity(request)));
     }

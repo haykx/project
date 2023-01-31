@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.um.reg.LoginRequest;
 import com.project.um.reg.PublisherPrincipal;
 import com.project.um.services.details.PublisherUserDetailsService;
+import com.project.um.services.exceptions.BadRequestException;
 import com.project.um.services.token.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,9 +38,9 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
             if (encoder.matches(password, principal.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(principal, password);
             }
-            throw new RuntimeException();
+            throw new BadRequestException("Wrong password");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new BadRequestException("Invalid credentials");
         }
     }
 

@@ -4,6 +4,8 @@ import com.project.um.entities.UmPublisher;
 import com.project.um.reg.LoginRequest;
 import com.project.um.reg.PublisherPrincipal;
 import com.project.um.repositories.PublisherRepository;
+import com.project.um.services.exceptions.BadRequestException;
+import com.project.um.services.exceptions.NotFoundException;
 import com.project.um.services.login.LoginService;
 import com.project.um.services.token.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +29,9 @@ public class PublisherLoginService implements LoginService<LoginRequest> {
     @Override
     public ResponseEntity<?> login(LoginRequest request) {
         System.out.println("here!");
-        UmPublisher umPublisher = this.repository.findByEmailAndDeletedIsNull(request.getEmail()).orElseThrow();
+        UmPublisher umPublisher = this.repository.findByEmailAndDeletedIsNull(request.getEmail()).orElseThrow(()->new NotFoundException(request.getEmail()));
         if(!encoder.matches(request.getPassword(), umPublisher.getPassword())){
-            throw new RuntimeException();
+            throw new BadRequestException("Wrong password");
         }
         PublisherPrincipal dto = this.mapper.toPrincipal(umPublisher);
         Map<String, String> tokens = jwtUtil.generateToken(dto);
