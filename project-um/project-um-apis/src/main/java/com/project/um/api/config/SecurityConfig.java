@@ -4,6 +4,7 @@ import com.project.um.api.entryPoint.JwtAuthEntryPoint;
 import com.project.um.api.filters.UserAuthenticationFilter;
 import com.project.um.api.filters.UserAuthorizationFilter;
 import com.project.um.services.details.PublisherUserDetailsService;
+import com.project.um.services.token.JwtTokenService;
 import com.project.um.services.token.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,6 +27,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableAutoConfiguration(exclude=ErrorMvcAutoConfiguration.class)
 public class SecurityConfig {
   private final JwtUtil jwtUtil;
+  private final JwtTokenService tokenService;
   private final JwtAuthEntryPoint entryPoint;
   private final DaoAuthenticationProvider authProvider;
   private final PublisherUserDetailsService userDetailsService;
@@ -49,7 +51,7 @@ public class SecurityConfig {
             .authenticationEntryPoint(entryPoint)
             .and()
             .authenticationProvider(authProvider)
-            .addFilter(new UserAuthenticationFilter(jwtUtil, userDetailsService, encoder))
+            .addFilter(new UserAuthenticationFilter(tokenService, userDetailsService, encoder))
             .addFilterBefore(new UserAuthorizationFilter(jwtUtil), UserAuthenticationFilter.class)
             .build();
   }

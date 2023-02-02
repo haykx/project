@@ -5,7 +5,7 @@ import com.project.um.reg.LoginRequest;
 import com.project.um.reg.PublisherPrincipal;
 import com.project.um.services.details.PublisherUserDetailsService;
 import com.project.um.services.exceptions.BadRequestException;
-import com.project.um.services.token.JwtUtil;
+import com.project.um.services.token.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final JwtUtil jwtUtil;
+    private final JwtTokenService tokenService;
     private final PublisherUserDetailsService userDetailsService;
     private final PasswordEncoder encoder;
 
@@ -47,7 +47,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         PublisherPrincipal user = (PublisherPrincipal) authentication.getPrincipal();
-        Map<String, String> tokens = jwtUtil.generateToken(user);
+        Map<String, String> tokens = tokenService.generateTokens(user);
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

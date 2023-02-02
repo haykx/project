@@ -16,8 +16,13 @@ public interface RoleRepository extends JpaRepository<Role, UUID> {
     Optional<Role> findByIdAndDeletedIsNull(UUID id);
 
     List<Role> findAllByIdInAndDeletedIsNull(List<UUID> ids);
+    List<Role> getAllByDeletedIsNull();
 
     @Modifying
     @Query("UPDATE Role r SET r.deleted = CURRENT_TIMESTAMP, r.updated = CURRENT_TIMESTAMP WHERE r.id = :id AND r.deleted IS NULL")
     void delete(@Param("id")UUID id);
+
+    default List<Role> getDefaultRoles(){
+        return getAllByDeletedIsNull();
+    }
 }

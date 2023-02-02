@@ -5,6 +5,7 @@ import com.project.um.request.PublisherUpdateDto;
 import com.project.um.response.PublisherResponse;
 import com.project.um.services.publisher.PublisherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,7 +26,7 @@ public class PublisherEndpoint {
     private final PublisherService service;
 
     @PostMapping("/")
-    public PublisherResponse add(@RequestBody PublisherRequest request){
+    public ResponseEntity<?> add(@RequestBody PublisherRequest request){
         return this.service.add(request);
     }
 
