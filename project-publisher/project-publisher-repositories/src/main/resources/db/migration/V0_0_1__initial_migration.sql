@@ -8,21 +8,21 @@ CREATE table t_publishers
     avatar      BYTEA,
     created     TIMESTAMP    NOT NULL,
     updated     TIMESTAMP    NOT NULL,
-    deleted     TIMESTAMP    NOT NULL,
+    deleted     TIMESTAMP,
 
     PRIMARY KEY (id)
 );
 CREATE TABLE t_posts
 (
     id           UUID          NOT NULL,
-    headline     VARCHAR(70)   NOT NULL,
+    headline     VARCHAR(150)   NOT NULL,
     image        BYTEA         NOT NULL,
-    body         VARCHAR(1000) NOT NULL,
-    link         VARCHAR(40)   NOT NULL,
+    body         VARCHAR(7000) NOT NULL,
+    link         VARCHAR(150),
     publisher_id UUID          NOT NULL REFERENCES t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
     created      TIMESTAMP     NOT NULL,
     updated      TIMESTAMP     NOT NULL,
-    deleted      TIMESTAMP     NOT NULL,
+    deleted      TIMESTAMP,
 
     PRIMARY KEY (id)
 );

@@ -38,7 +38,7 @@ public class InitOnLoad implements ApplicationListener<ApplicationStartedEvent> 
                 encoder.encode("1234"),
                 roleRepository.saveAll(roles));
 
-        publisherRepository.save(publisher);
+//        publisherRepository.save(publisher);
 
     }
 }

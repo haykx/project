@@ -24,7 +24,7 @@ public class PostMapper implements Mapper<PostRequest, Post, PostResponse> {
         Post post = new Post();
         post.setPublisher(this.getPublisher(request));
         post.setHeadline(request.getHeadline());
-        post.setImage(request.getImage());
+        post.setImage(Base64.getDecoder().decode(request.getImage().substring(23)));
         post.setBody(request.getBody());
         post.setLink(request.getLink());
         post.setLikes(0);
@@ -47,6 +47,7 @@ public class PostMapper implements Mapper<PostRequest, Post, PostResponse> {
             response.setImage(new String(Base64.getEncoder().encode(post.getImage()), UTF_8));
         }
         response.setCreated(post.getCreated());
+        response.setLikes(post.getLikes());
         response.setUpdated(post.getUpdated());
         response.setDeleted(post.getDeleted());
         return response;

@@ -8,7 +8,7 @@ import java.util.UUID;
 public class PostRequest {
     private UUID publisherId;
     private String headline;
-    private byte[] image;
+    private String image;
     private String body;
     private String link;
 }
