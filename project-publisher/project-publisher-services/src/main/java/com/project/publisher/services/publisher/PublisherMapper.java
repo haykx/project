@@ -5,7 +5,7 @@ import com.project.publisher.reg.PublisherPrincipal;
 import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.response.PublisherResponse;
 import com.project.publisher.services.mapper.Mapper;
-import com.project.publisher.services.post.PostMapper;
+import com.project.publisher.services.post.DiscussionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PublisherMapper implements Mapper<PublisherRequest, Publisher, PublisherResponse> {
 
-    private final PostMapper postMapper;
+    private final DiscussionMapper discussionMapper;
 
     @Override
     public Publisher toEntity(final PublisherRequest request) {
@@ -39,7 +39,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         response.setLastName(publisher.getLastName());
         response.setBio(publisher.getBio());
         response.setAvatar(publisher.getAvatar());
-        response.setPosts(publisher.getPosts().stream().map(postMapper::toResponse).collect(Collectors.toList()));
+        response.setPosts(publisher.getDiscussions().stream().map(discussionMapper::toResponse).collect(Collectors.toList()));
         response.setCreated(publisher.getCreated());
         response.setUpdated(publisher.getUpdated());
         response.setDeleted(publisher.getDeleted());

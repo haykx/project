@@ -18,7 +18,7 @@
     "lastName": string,<br>
     "bio": string,<br>
     "avatar": byte array,<br>
-    "posts": list of post responses,<br>
+    "posts": list of discussion responses,<br>
     "created": timestamp,<br>
     "updated": timestamp,<br>
     "deleted": timestamp<br>
@@ -121,52 +121,52 @@
 
 <ol>
     <li>
-        <a>http://localhost:8040/api/v1/post</a>
+        <a>http://localhost:8040/api/v1/discussion</a>
         <p>Mapping - POST</p>
-        <p>Description - Create a post</p>
+        <p>Description - Create a discussion</p>
         <p>Body - Post Request</p>
         <p>Response - Post Response</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post/{id}</a>
+        <a>http://localhost:8040/api/v1/discussion/{id}</a>
         <p>Mapping - GET</p>
-        <p>Description - Get a post by id</p>
+        <p>Description - Get a discussion by id</p>
         <p>Path variables - id</p>
         <p>Response - Post Response</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post</a>
+        <a>http://localhost:8040/api/v1/discussion</a>
         <p>Mapping - PATCH</p>
-        <p>Description - Update a post by id</p>
+        <p>Description - Update a discussion by id</p>
         <p>Request params - id<br>
         <p>Body - Post Update</p>
         <p>Response - Post Response</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post</a>
+        <a>http://localhost:8040/api/v1/discussion</a>
         <p>Mapping - GET</p>
-        <p>Description - Search for a post</p>
+        <p>Description - Search for a discussion</p>
         <p>Request params - Post Query<br>
         <p>Response - Array[Post Response]</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post</a>
+        <a>http://localhost:8040/api/v1/discussion</a>
         <p>Mapping - DELETE</p>
-        <p>Description - Delete a post</p>
+        <p>Description - Delete a discussion</p>
         <p>Request params - id<br>
         <p>Response - none</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post/{id}/like</a>
+        <a>http://localhost:8040/api/v1/discussion/{id}/like</a>
         <p>Mapping - POST</p>
-        <p>Description - Like a post</p>
+        <p>Description - Like a discussion</p>
         <p>Path Variable - id</p>
         <p>Response - none</p>
     </li>
     <li>
-        <a>http://localhost:8040/api/v1/post/{id}/unlike</a>
+        <a>http://localhost:8040/api/v1/discussion/{id}/unlike</a>
         <p>Mapping - POST</p>
-        <p>Description - Unlike a post</p>
+        <p>Description - Unlike a discussion</p>
         <p>Path Variable - id</p>
         <p>Response - none</p>
     </li>
@@ -223,7 +223,7 @@
     <li>
         <a>http://localhost:8030/api/v1/permission</a>
         <p>Mapping - DELETE</p>
-        <p>Description - Delete a post</p>
+        <p>Description - Delete a discussion</p>
         <p>Request params - id<br>
         <p>Response - none</p>
     </li>

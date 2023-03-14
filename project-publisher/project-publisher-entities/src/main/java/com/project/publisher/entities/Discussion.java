@@ -13,8 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "t_posts")
-public class Post extends BaseEntity {
+@Table(name = "t_discussions")
+public class Discussion extends BaseEntity {
 
     @Column(name = "headline")
     private String headline;
@@ -34,7 +34,5 @@ public class Post extends BaseEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
-
-    //TODO: implement like system
 
 }

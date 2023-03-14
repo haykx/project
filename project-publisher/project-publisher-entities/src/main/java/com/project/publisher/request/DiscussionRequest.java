@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class PostRequest {
+public class DiscussionRequest {
     private UUID publisherId;
     private String headline;
     private String image;

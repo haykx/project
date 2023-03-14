@@ -31,6 +31,6 @@ public class Publisher extends BaseEntity {
     private byte[] avatar;
 
     @OneToMany(mappedBy = "publisher")
-    private List<Post> posts = new ArrayList<>();
+    private List<Discussion> discussions = new ArrayList<>();
 
 }

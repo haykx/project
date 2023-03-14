@@ -1,17 +1,17 @@
 package com.project.publisher.services.post;
 
-import com.project.publisher.request.PostRequest;
-import com.project.publisher.request.PostUpdateDto;
-import com.project.publisher.response.PostResponse;
-import com.project.publisher.services.query.PostQuery;
+import com.project.publisher.request.DiscussionRequest;
+import com.project.publisher.request.DiscussionUpdateDto;
+import com.project.publisher.response.DiscussionResponse;
+import com.project.publisher.services.query.DiscussionQuery;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface PublicationService {
-    PostResponse add(PostRequest request);
-    PostResponse get(UUID id);
-    List<PostResponse> search(PostQuery query);
-    PostResponse update(UUID id, PostUpdateDto dto);
+    DiscussionResponse add(DiscussionRequest request);
+    DiscussionResponse get(UUID id);
+    List<DiscussionResponse> search(DiscussionQuery query);
+    DiscussionResponse update(UUID id, DiscussionUpdateDto dto);
     void delete(UUID id);
 }

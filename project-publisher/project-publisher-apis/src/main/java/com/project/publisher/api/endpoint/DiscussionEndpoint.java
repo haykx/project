@@ -1,10 +1,10 @@
 package com.project.publisher.api.endpoint;
 
-import com.project.publisher.request.PostRequest;
-import com.project.publisher.request.PostUpdateDto;
-import com.project.publisher.response.PostResponse;
-import com.project.publisher.services.post.PostService;
-import com.project.publisher.services.query.PostQuery;
+import com.project.publisher.request.DiscussionRequest;
+import com.project.publisher.request.DiscussionUpdateDto;
+import com.project.publisher.response.DiscussionResponse;
+import com.project.publisher.services.post.DiscussionService;
+import com.project.publisher.services.query.DiscussionQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,26 +24,26 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
-public class PostEndpoint {
-    private final PostService service;
+public class DiscussionEndpoint {
+    private final DiscussionService service;
 
     @PostMapping
-    public PostResponse add(@RequestBody final PostRequest request){
+    public DiscussionResponse add(@RequestBody final DiscussionRequest request){
         return this.service.add(request);
     }
 
     @GetMapping("/{id}")
-    public PostResponse get(@PathVariable("id")final UUID id){
+    public DiscussionResponse get(@PathVariable("id")final UUID id){
         return this.service.get(id);
     }
 
     @GetMapping
-    public List<PostResponse> search(final PostQuery query){
+    public List<DiscussionResponse> search(final DiscussionQuery query){
         return this.service.search(query);
     }
 
     @PatchMapping
-    public PostResponse update(@RequestParam("id")final UUID id, @RequestBody PostUpdateDto dto){
+    public DiscussionResponse update(@RequestParam("id")final UUID id, @RequestBody DiscussionUpdateDto dto){
         return this.service.update(id, dto);
     }
 

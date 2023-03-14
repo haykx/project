@@ -12,5 +12,5 @@ public class PublisherResponse extends BaseResponse {
     private String lastName;
     private String bio;
     private byte[] avatar;
-    private List<PostResponse> posts;
+    private List<DiscussionResponse> posts;
 }

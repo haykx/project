@@ -1,6 +1,6 @@
 package com.project.publisher.services.post;
 
-import com.project.publisher.repositories.PostRepository;
+import com.project.publisher.repositories.DiscussionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PostLikeService {
 
-    private final PostRepository repository;
+    private final DiscussionRepository repository;
 
     public ResponseEntity<?> like(final UUID id){
         try{
