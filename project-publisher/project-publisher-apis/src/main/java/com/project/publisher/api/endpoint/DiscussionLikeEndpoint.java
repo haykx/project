@@ -1,6 +1,6 @@
 package com.project.publisher.api.endpoint;
 
-import com.project.publisher.services.post.PostLikeService;
+import com.project.publisher.services.post.DiscussionLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,8 +15,8 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
-public class PostLikeEndpoint {
-    private final PostLikeService likeService;
+public class DiscussionLikeEndpoint {
+    private final DiscussionLikeService likeService;
 
 
     @PostMapping("/{id}/like")

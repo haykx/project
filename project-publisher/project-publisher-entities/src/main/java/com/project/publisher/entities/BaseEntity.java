@@ -33,9 +33,6 @@ public abstract class BaseEntity {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
-    @Column(name = "deleted")
-    private LocalDateTime deleted;
-
     @PrePersist
     protected void onCreate() {
         this.created = LocalDateTime.now();

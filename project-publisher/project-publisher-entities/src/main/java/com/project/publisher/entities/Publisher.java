@@ -29,7 +29,6 @@ public class Publisher extends BaseEntity {
     private String bio;
     @Column(name = "avatar")
     private byte[] avatar;
-
     @OneToMany(mappedBy = "publisher")
     private List<Discussion> discussions = new ArrayList<>();
 

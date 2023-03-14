@@ -4,10 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,11 +19,8 @@ import lombok.Setter;
 @Table(name = "t_discussions")
 public class Discussion extends BaseEntity {
 
-    @Column(name = "headline")
-    private String headline;
-
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "question")
+    private String question;
 
     @Column(name = "body")
     private String body;
@@ -35,4 +35,6 @@ public class Discussion extends BaseEntity {
     @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
 
+    @OneToMany(mappedBy = "discussion")
+    private List<Comment> comments;
 }

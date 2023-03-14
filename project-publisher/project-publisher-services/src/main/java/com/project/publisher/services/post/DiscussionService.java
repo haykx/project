@@ -32,7 +32,7 @@ public class DiscussionService implements PublicationService {
 
     @Override
     public DiscussionResponse get(final UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
+        return this.mapper.toResponse(this.repository.findById(id).orElseThrow(()->new NotFoundException(id)));
     }
 
 
@@ -48,9 +48,9 @@ public class DiscussionService implements PublicationService {
     @Override
     @Transactional
     public DiscussionResponse update(final UUID id, final DiscussionUpdateDto dto) {
-        Discussion discussion = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
-        Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setHeadline);
-        Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setHeadline);
+        Discussion discussion = this.repository.findById(id).orElseThrow();
+        Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setQuestion);
+        Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setQuestion);
         Optional.ofNullable(dto.getBody()).ifPresent(discussion::setBody);
         Optional.ofNullable(dto.getLink()).ifPresent(discussion::setLink);
         return this.mapper.toResponse(this.repository.save(discussion));
@@ -58,6 +58,6 @@ public class DiscussionService implements PublicationService {
 
     @Override
     public void delete(final UUID id) {
-        this.repository.delete(id);
+        this.repository.deleteById(id);
     }
 }

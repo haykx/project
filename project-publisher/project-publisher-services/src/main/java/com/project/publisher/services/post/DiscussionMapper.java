@@ -23,7 +23,7 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
     public Discussion toEntity(final DiscussionRequest request) {
         Discussion discussion = new Discussion();
         discussion.setPublisher(this.getPublisher(request));
-        discussion.setHeadline(request.getHeadline());
+        discussion.setQuestion(request.getQuestion());
         discussion.setImage(Base64.getDecoder().decode(request.getImage().substring(23)));
         discussion.setBody(request.getBody());
         discussion.setLink(request.getLink());
@@ -32,14 +32,14 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
     }
 
     private Publisher getPublisher(final DiscussionRequest request) {
-        return this.publisherRepository.findByIdAndDeletedIsNull(request.getPublisherId()).orElseThrow();
+        return this.publisherRepository.findById(request.getPublisherId()).orElseThrow();
     }
 
     @Override
     public DiscussionResponse toResponse(final Discussion discussion) {
         DiscussionResponse response = new DiscussionResponse();
         response.setId(discussion.getId());
-        response.setHeadline(discussion.getHeadline());
+        response.setQuestion(discussion.getQuestion());
         response.setPublisherId(discussion.getPublisher().getId());
         response.setLink(discussion.getLink());
         response.setBody(discussion.getBody());

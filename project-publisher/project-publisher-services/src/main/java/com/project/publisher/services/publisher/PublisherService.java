@@ -30,8 +30,8 @@ public class PublisherService implements UserService {
     @Override
     public PublisherResponse add(final PublisherRequest request) {
         PublisherPrincipal principal = (PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(this.repository.existsByOriginalIdAndDeletedIsNull(principal.getId())){
-            return this.mapper.toResponse(this.repository.findByOriginalIdAndDeletedIsNull(principal.getId()).orElseThrow());
+        if(this.repository.existsByOriginalId(principal.getId())){
+            return this.mapper.toResponse(this.repository.findByOriginalId(principal.getId()).orElseThrow());
         }
         if (request == null) {
             throw new BadRequestException("Invalid request");
@@ -41,13 +41,13 @@ public class PublisherService implements UserService {
 
     @Override
     public PublisherResponse get(final UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow());
+        return this.mapper.toResponse(this.repository.findById(id).orElseThrow());
     }
 
     @Override
     @Transactional
     public PublisherResponse update(final UUID id, final PublisherUpdateDto dto) {
-        Publisher publisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow();
+        Publisher publisher = this.repository.findById(id).orElseThrow();
         Optional.ofNullable(dto.getFirstName()).ifPresent(publisher::setFirstName);
         Optional.ofNullable(dto.getLastName()).ifPresent(publisher::setLastName);
         Optional.ofNullable(dto.getAvatar()).ifPresent(publisher::setAvatar);
@@ -66,6 +66,6 @@ public class PublisherService implements UserService {
 
     @Override
     public void delete(final UUID id) {
-        this.repository.delete(id);
+        this.repository.deleteById(id);
     }
 }

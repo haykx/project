@@ -13,11 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, UUID>, JpaSpecificationExecutor<Publisher> {
-    boolean existsByOriginalIdAndDeletedIsNull(UUID id);
-    Optional<Publisher> findByIdAndDeletedIsNull(UUID id);
+    boolean existsByOriginalId(UUID id);
 
-    Optional<Publisher> findByOriginalIdAndDeletedIsNull(UUID id);
-    @Modifying
-    @Query("UPDATE Publisher p SET p.deleted = CURRENT_TIMESTAMP WHERE p.id = :id AND p.deleted IS NULL")
-    void delete(@Param("id")UUID id);
+    Optional<Publisher> findByOriginalId(UUID id);
 }
