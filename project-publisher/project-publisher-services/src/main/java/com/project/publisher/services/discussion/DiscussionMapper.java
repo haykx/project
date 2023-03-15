@@ -9,10 +9,6 @@ import com.project.publisher.services.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 @Component
 @RequiredArgsConstructor
 public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, DiscussionResponse> {
@@ -24,7 +20,6 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
         Discussion discussion = new Discussion();
         discussion.setPublisher(this.getPublisher(request));
         discussion.setQuestion(request.getQuestion());
-        discussion.setImage(Base64.getDecoder().decode(request.getImage().substring(23)));
         discussion.setBody(request.getBody());
         discussion.setLink(request.getLink());
         discussion.setLikes(0);
@@ -43,13 +38,9 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
         response.setPublisherId(discussion.getPublisher().getId());
         response.setLink(discussion.getLink());
         response.setBody(discussion.getBody());
-        if (discussion.getImage() != null) {
-            response.setImage(new String(Base64.getEncoder().encode(discussion.getImage()), UTF_8));
-        }
         response.setCreated(discussion.getCreated());
         response.setLikes(discussion.getLikes());
         response.setUpdated(discussion.getUpdated());
-        response.setDeleted(discussion.getDeleted());
         return response;
     }
 }

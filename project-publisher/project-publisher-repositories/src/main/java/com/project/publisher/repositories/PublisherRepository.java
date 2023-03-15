@@ -3,7 +3,6 @@ package com.project.publisher.repositories;
 import com.project.publisher.entities.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,4 +15,7 @@ public interface PublisherRepository extends JpaRepository<Publisher, UUID>, Jpa
     boolean existsByOriginalId(UUID id);
 
     Optional<Publisher> findByOriginalId(UUID id);
+
+    @Query("SELECT p.id FROM Publisher p WHERE p.originalId = :oid")
+    UUID getIdByOriginalId(@Param("oid")UUID originalId);
 }

@@ -5,13 +5,12 @@ CREATE table t_publishers
     first_name  VARCHAR(50)  NOT NULL,
     last_name   VARCHAR(50)  NOT NULL,
     bio         VARCHAR(100) NOT NULL,
-    avatar      BYTEA,
     created     TIMESTAMP    NOT NULL,
     updated     TIMESTAMP    NOT NULL,
 
     PRIMARY KEY (id)
 );
-CREATE TABLE t_posts
+CREATE TABLE t_discussions
 (
     id           UUID          NOT NULL,
     question     VARCHAR(150)  NOT NULL,
@@ -24,17 +23,17 @@ CREATE TABLE t_posts
 
     PRIMARY KEY (id)
 );
-CREATE TABLE t_discussions
+CREATE TABLE t_comments
 (
     id           UUID         NOT NULL,
     text         VARCHAR(300) NOT NULL,
-    post_id      UUID REFERENCES t_posts (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    discussion_id      UUID REFERENCES t_discussions (id) ON UPDATE CASCADE ON DELETE CASCADE,
     publisher_id UUID REFERENCES t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    parent_id    UUID REFERENCES t_discussions (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    parent_id    UUID REFERENCES t_comments (id) ON UPDATE CASCADE ON DELETE CASCADE,
     likes        INT          NOT NULL,
     created      TIMESTAMP    NOT NULL,
     updated      TIMESTAMP    NOT NULL,
 
     PRIMARY KEY (id),
-    CHECK ( (post_id IS NULL AND parent_id IS NOT NULL) OR (post_id IS NOT NULL AND parent_id IS NULL) )
+    CHECK ( (discussion_id IS NULL AND parent_id IS NOT NULL) OR (discussion_id IS NOT NULL AND parent_id IS NULL) )
 );

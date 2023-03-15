@@ -1,16 +1,14 @@
 package com.project.publisher.services.publisher;
 
 import com.project.publisher.entities.Publisher;
-import com.project.publisher.reg.PublisherPrincipal;
 import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.response.PublisherResponse;
-import com.project.publisher.services.mapper.Mapper;
 import com.project.publisher.services.discussion.DiscussionMapper;
+import com.project.publisher.services.mapper.Mapper;
+import com.project.publisher.services.token.AuthFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,6 +16,7 @@ import java.util.stream.Collectors;
 public class PublisherMapper implements Mapper<PublisherRequest, Publisher, PublisherResponse> {
 
     private final DiscussionMapper discussionMapper;
+    private final AuthFacade facade;
 
     @Override
     public Publisher toEntity(final PublisherRequest request) {
@@ -26,7 +25,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         publisher.setLastName(request.getLastName());
         publisher.setBio(request.getBio());
         publisher.setAvatar(request.getAvatar());
-        publisher.setOriginalId(this.getIdFromToken());
+        publisher.setOriginalId(facade.getOriginalId());
         return publisher;
     }
 
@@ -42,11 +41,6 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         response.setPosts(publisher.getDiscussions().stream().map(discussionMapper::toResponse).collect(Collectors.toList()));
         response.setCreated(publisher.getCreated());
         response.setUpdated(publisher.getUpdated());
-        response.setDeleted(publisher.getDeleted());
         return response;
-    }
-
-    private UUID getIdFromToken() {
-        return ((PublisherPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
     }
 }
