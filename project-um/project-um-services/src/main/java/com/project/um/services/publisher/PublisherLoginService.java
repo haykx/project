@@ -28,7 +28,7 @@ public class PublisherLoginService implements LoginService<LoginRequest> {
 
     @Override
     public ResponseEntity<?> login(LoginRequest request) {
-        UmPublisher umPublisher = this.repository.findByEmailAndDeletedIsNull(request.getEmail()).orElseThrow(()->new NotFoundException(request.getEmail()));
+        UmPublisher umPublisher = this.repository.findByEmail(request.getEmail()).orElseThrow(()->new NotFoundException(request.getEmail()));
         if(!encoder.matches(request.getPassword(), umPublisher.getPassword())){
             throw new BadRequestException("Wrong password");
         }

@@ -31,7 +31,6 @@ public class PublisherMapper implements Mapper<PublisherRequest, UmPublisher, Pu
         response.setEmail(umPublisher.getEmail());
         response.setCreated(umPublisher.getCreated());
         response.setUpdated(umPublisher.getUpdated());
-        response.setDeleted(umPublisher.getDeleted());
         return response;
     }
 

@@ -18,6 +18,6 @@ public class PublisherUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.mapper.toPrincipal(this.repository.findByEmailAndDeletedIsNull(username).orElseThrow(()->new NotFoundException(username)));
+        return this.mapper.toPrincipal(this.repository.findByEmail(username).orElseThrow(()->new NotFoundException(username)));
     }
 }

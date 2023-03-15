@@ -37,7 +37,7 @@ public class JwtTokenService implements TokenService<PublisherPrincipal> {
   }
 
   private PublisherPrincipal getPrincipal(String email) {
-    return this.mapper.toPrincipal(this.repository.findByEmailAndDeletedIsNull(email).orElseThrow(()->new NotFoundException(email)));
+    return this.mapper.toPrincipal(this.repository.findByEmail(email).orElseThrow(()->new NotFoundException(email)));
   }
 
   private <T extends PublisherPrincipal> Map<String, String> generate(T user) {

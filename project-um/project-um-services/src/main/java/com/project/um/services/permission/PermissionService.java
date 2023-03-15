@@ -1,7 +1,6 @@
 package com.project.um.services.permission;
 
 import com.project.um.repositories.PermissionRepository;
-import com.project.um.repositories.RolePermissionRepository;
 import com.project.um.request.PermissionRequest;
 import com.project.um.response.PermissionResponse;
 import com.project.um.services.exceptions.NotFoundException;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class PermissionService implements UserPermissionService {
 
     private final PermissionRepository repository;
-    private final RolePermissionRepository crossRepository;
     private final PermissionMapper mapper;
 
     @Override
@@ -27,17 +25,16 @@ public class PermissionService implements UserPermissionService {
 
     @Override
     public PermissionResponse get(UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
+        return this.mapper.toResponse(this.repository.findById(id).orElseThrow(()->new NotFoundException(id)));
     }
 
     @Override
     public List<PermissionResponse> get(List<UUID> ids) {
-        return this.repository.findAllByIdInAndDeletedIsNull(ids).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return this.repository.findAllByIdIn(ids).stream().map(mapper::toResponse).collect(Collectors.toList());
     }
 
     @Override
     public void delete(UUID id) {
-        this.crossRepository.deleteAllByPk_PermissionId(id);
-        this.repository.delete(id);
+        this.repository.deleteById(id);
     }
 }

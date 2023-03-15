@@ -21,7 +21,6 @@ public class PermissionMapper implements Mapper<PermissionRequest, Permission, P
         response.setName(permission.getName());
         response.setCreated(permission.getCreated());
         response.setUpdated(permission.getUpdated());
-        response.setDeleted(permission.getDeleted());
         return response;
     }
 }

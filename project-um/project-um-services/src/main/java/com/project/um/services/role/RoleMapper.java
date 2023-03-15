@@ -28,10 +28,9 @@ public class RoleMapper implements Mapper<RoleRequest, Role, RoleResponse> {
         response.setName(role.getName());
         response.setCreated(role.getCreated());
         response.setUpdated(role.getUpdated());
-        response.setDeleted(role.getDeleted());
         return response;
     }
     private List<Permission> getPermissions(RoleRequest request) {
-        return this.permissionRepository.findAllByIdInAndDeletedIsNull(request.getPermissions());
+        return this.permissionRepository.findAllByIdIn(request.getPermissions());
     }
 }

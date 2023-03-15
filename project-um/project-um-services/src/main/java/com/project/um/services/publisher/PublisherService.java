@@ -2,7 +2,6 @@ package com.project.um.services.publisher;
 
 import com.project.um.entities.UmPublisher;
 import com.project.um.repositories.PublisherRepository;
-import com.project.um.repositories.PublisherRoleRepository;
 import com.project.um.request.PublisherRequest;
 import com.project.um.request.PublisherUpdateDto;
 import com.project.um.response.PublisherResponse;
@@ -26,13 +25,12 @@ public class PublisherService implements UserService <PublisherRequest, Publishe
 
     private final PublisherMapper mapper;
     private final PublisherRepository repository;
-    private final PublisherRoleRepository crossRepository;
     private final PasswordEncoder encoder;
     private final JwtTokenService loginService;
 
     @Override
     public ResponseEntity<?> add(PublisherRequest request) {
-        if (repository.existsByEmailAndDeletedIsNull(request.getEmail())){
+        if (repository.existsByEmail(request.getEmail())){
             throw new BadRequestException("You already got an account!");
         }
         UmPublisher publisher = this.repository.save(this.mapper.toEntity(request));
@@ -42,9 +40,9 @@ public class PublisherService implements UserService <PublisherRequest, Publishe
 
     @Override
     public PublisherResponse update(UUID id, PublisherUpdateDto dto) {
-        UmPublisher umPublisher = this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id));
+        UmPublisher umPublisher = this.repository.findById(id).orElseThrow(()->new NotFoundException(id));
         Optional.ofNullable(dto.getEmail()).ifPresent(email -> {
-            if(!this.repository.existsByEmailAndDeletedIsNull(email)){
+            if(!this.repository.existsByEmail(email)){
                 umPublisher.setEmail(email);
             }
         });
@@ -56,18 +54,17 @@ public class PublisherService implements UserService <PublisherRequest, Publishe
 
     @Override
     public PublisherResponse get(UUID id) {
-        return this.mapper.toResponse(this.repository.findByIdAndDeletedIsNull(id).orElseThrow(()->new NotFoundException(id)));
+        return this.mapper.toResponse(this.repository.findById(id).orElseThrow(()->new NotFoundException(id)));
     }
 
     @Override
     public List<PublisherResponse> get(List<UUID> ids) {
-        return this.repository.findAllByIdInAndDeletedIsNull(ids).stream().map(mapper::toResponse).collect(Collectors.toList());
+        return this.repository.findAllByIdIn(ids).stream().map(mapper::toResponse).collect(Collectors.toList());
     }
 
     @Override
     public void delete(UUID id) {
-        this.crossRepository.deleteAllByPk_PublisherId(id);
-        this.repository.delete(id);
+        this.repository.deleteById(id);
     }
 
 

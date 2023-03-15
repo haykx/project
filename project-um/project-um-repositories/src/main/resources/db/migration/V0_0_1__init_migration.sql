@@ -4,7 +4,6 @@ CREATE TABLE t_permissions
     name    VARCHAR(50) NOT NULL,
     created TIMESTAMP   NOT NULL,
     updated TIMESTAMP   NOT NULL,
-    deleted TIMESTAMP,
 
     PRIMARY KEY (id)
 );
@@ -14,7 +13,6 @@ CREATE TABLE t_roles
     name    VARCHAR(50) NOT NULL,
     created TIMESTAMP   NOT NULL,
     updated TIMESTAMP   NOT NULL,
-    deleted TIMESTAMP,
 
     PRIMARY KEY (id)
 );
@@ -30,7 +28,6 @@ CREATE TABLE t_publishers
     password   VARCHAR(70) NOT NULL,
     created    TIMESTAMP   NOT NULL,
     updated    TIMESTAMP   NOT NULL,
-    deleted    TIMESTAMP,
 
     PRIMARY KEY (id)
 );
