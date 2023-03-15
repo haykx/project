@@ -3,7 +3,7 @@ package com.project.publisher.api.endpoint;
 import com.project.publisher.request.DiscussionRequest;
 import com.project.publisher.request.DiscussionUpdateDto;
 import com.project.publisher.response.DiscussionResponse;
-import com.project.publisher.services.post.DiscussionService;
+import com.project.publisher.services.discussion.DiscussionService;
 import com.project.publisher.services.query.DiscussionQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;

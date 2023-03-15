@@ -5,7 +5,7 @@ import com.project.publisher.reg.PublisherPrincipal;
 import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.response.PublisherResponse;
 import com.project.publisher.services.mapper.Mapper;
-import com.project.publisher.services.post.DiscussionMapper;
+import com.project.publisher.services.discussion.DiscussionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

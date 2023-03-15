@@ -1,6 +1,6 @@
 package com.project.publisher.api.endpoint;
 
-import com.project.publisher.services.post.DiscussionLikeService;
+import com.project.publisher.services.discussion.DiscussionLikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

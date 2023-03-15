@@ -10,5 +10,4 @@ public abstract class BaseResponse {
     private UUID id;
     private LocalDateTime created;
     private LocalDateTime updated;
-    private LocalDateTime deleted;
 }

@@ -1,4 +1,4 @@
-package com.project.publisher.services.post;
+package com.project.publisher.services.discussion;
 
 import com.project.publisher.request.DiscussionRequest;
 import com.project.publisher.request.DiscussionUpdateDto;

@@ -1,4 +1,4 @@
-package com.project.publisher.services.post;
+package com.project.publisher.services.discussion;
 
 import com.project.publisher.repositories.DiscussionRepository;
 import lombok.RequiredArgsConstructor;
