@@ -23,7 +23,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/post")
+@RequestMapping("/discussion")
 public class DiscussionEndpoint {
     private final DiscussionService service;
 

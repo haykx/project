@@ -14,7 +14,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/post")
+@RequestMapping("/discussion")
 public class DiscussionLikeEndpoint {
     private final DiscussionLikeService likeService;
 
