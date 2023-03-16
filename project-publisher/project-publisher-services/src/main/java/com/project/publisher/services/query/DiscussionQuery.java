@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class DiscussionQuery extends PageableQuery {
-    private String headline;
+    private String question;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime postedDateMin;
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")

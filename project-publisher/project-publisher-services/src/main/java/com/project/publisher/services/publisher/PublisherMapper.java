@@ -24,7 +24,6 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         publisher.setFirstName(request.getFirstName());
         publisher.setLastName(request.getLastName());
         publisher.setBio(request.getBio());
-        publisher.setAvatar(request.getAvatar());
         publisher.setOriginalId(facade.getOriginalId());
         return publisher;
     }
@@ -37,7 +36,6 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         response.setFirstName(publisher.getFirstName());
         response.setLastName(publisher.getLastName());
         response.setBio(publisher.getBio());
-        response.setAvatar(publisher.getAvatar());
         response.setPosts(publisher.getDiscussions().stream().map(discussionMapper::toResponse).collect(Collectors.toList()));
         response.setCreated(publisher.getCreated());
         response.setUpdated(publisher.getUpdated());

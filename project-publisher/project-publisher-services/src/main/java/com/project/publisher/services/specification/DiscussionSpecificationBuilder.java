@@ -7,13 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DiscussionSpecificationBuilder implements SpecificationService<Discussion> {
-    public Specification<Discussion> basicSpecification() {
-        return this.eqNull("deleted");
-    }
-
     public Specification<Discussion> searchPosts(final DiscussionQuery query){
-        return this.basicSpecification()
-                .and(iLikeSpecification(query.getHeadline(), "headline"))
+        return this
+                .iLikeSpecification(query.getQuestion(), "question")
                 .and(inRange(query.getPostedDateMin(), query.getPostedDateMax(), "created"));
     }
 }

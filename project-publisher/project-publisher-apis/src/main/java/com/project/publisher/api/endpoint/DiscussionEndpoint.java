@@ -54,7 +54,6 @@ public class DiscussionEndpoint {
     public void delete(@RequestParam("id")final UUID id){
         this.service.delete(id);
     }
-
     @PostMapping("/{id}/like")
     public ResponseEntity<?> like(@PathVariable("id")final UUID id){
         return this.likeService.like(id);
