@@ -2,6 +2,7 @@ package com.project.publisher.services.comment;
 
 import com.project.publisher.entities.Comment;
 import com.project.publisher.repositories.CommentRepository;
+import com.project.publisher.repositories.PublisherRepository;
 import com.project.publisher.request.CommentRequest;
 import com.project.publisher.response.CommentResponse;
 import com.project.publisher.services.exceptions.BadRequestException;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class CommentService {
 
     private final CommentRepository repository;
+    private final PublisherRepository publisherRepository;
     private final CommentMapper mapper;
     private final AuthFacade facade;
 
@@ -42,6 +44,24 @@ public class CommentService {
         if (!comment.getPublisher().getOriginalId().equals(facade.getOriginalId())) {
             throw new BadRequestException("");
         }
+    }
+
+    @Transactional
+    public ResponseEntity<?> like(final UUID id){
+        Comment comment = this.repository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        UUID pubId = publisherRepository.getIdByOriginalId(facade.getOriginalId());
+        comment.like(pubId);
+        this.repository.save(comment);
+        return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    public ResponseEntity<?> unlike(final UUID id){
+        Comment comment = this.repository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        UUID pubId = publisherRepository.getIdByOriginalId(facade.getOriginalId());
+        comment.unlike(pubId);
+        this.repository.save(comment);
+        return ResponseEntity.ok().build();
     }
 
 }

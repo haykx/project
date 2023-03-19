@@ -18,6 +18,7 @@ public interface DiscussionRepository extends JpaRepository<Discussion, UUID>, J
 
     Optional<Discussion> findById(UUID id);
 
+
     @Modifying
     @Query("UPDATE Discussion p SET p.likes=p.likes+1, p.updated = CURRENT_TIMESTAMP WHERE p.id = :id")
     void like(@Param("id")UUID id);

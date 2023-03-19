@@ -3,7 +3,6 @@ package com.project.publisher.api.endpoint;
 import com.project.publisher.request.DiscussionRequest;
 import com.project.publisher.request.DiscussionUpdateDto;
 import com.project.publisher.response.DiscussionResponse;
-import com.project.publisher.services.discussion.DiscussionLikeService;
 import com.project.publisher.services.discussion.DiscussionService;
 import com.project.publisher.services.query.DiscussionQuery;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ import java.util.UUID;
 @RequestMapping("/discussion")
 public class DiscussionEndpoint {
     private final DiscussionService service;
-    private final DiscussionLikeService likeService;
 
     @PostMapping
     public DiscussionResponse add(@RequestBody final DiscussionRequest request){
@@ -56,11 +54,11 @@ public class DiscussionEndpoint {
     }
     @PostMapping("/{id}/like")
     public ResponseEntity<?> like(@PathVariable("id")final UUID id){
-        return this.likeService.like(id);
+        return this.service.like(id);
     }
 
     @PostMapping("/{id}/unlike")
     public ResponseEntity<?> unlike(@PathVariable("id")final UUID id){
-        return this.likeService.unlike(id);
+        return this.service.unlike(id);
     }
 }

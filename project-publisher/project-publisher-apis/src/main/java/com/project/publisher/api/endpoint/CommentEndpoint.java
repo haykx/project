@@ -2,7 +2,6 @@ package com.project.publisher.api.endpoint;
 
 import com.project.publisher.request.CommentRequest;
 import com.project.publisher.response.CommentResponse;
-import com.project.publisher.services.comment.CommentLikeService;
 import com.project.publisher.services.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,6 @@ import java.util.UUID;
 @RequestMapping("/comment")
 public class CommentEndpoint {
     private final CommentService service;
-    private final CommentLikeService likeService;
 
     @PostMapping
     public CommentResponse add(@RequestBody final CommentRequest request){
@@ -53,11 +51,11 @@ public class CommentEndpoint {
 
     @PostMapping("/{id}/like")
     public ResponseEntity<?> like(@PathVariable("id")final UUID id){
-        return this.likeService.like(id);
+        return this.service.like(id);
     }
 
     @PostMapping("/{id}/unlike")
     public ResponseEntity<?> unlike(@PathVariable("id")final UUID id){
-        return this.likeService.unlike(id);
+        return this.service.unlike(id);
     }
 }

@@ -48,10 +48,20 @@ public class CommentMapper implements Mapper<CommentRequest, Comment, CommentRes
         response.setId(comment.getId());
         response.setText(comment.getText());
         response.setLikes(comment.getLikes());
-        response.setDiscussionId(comment.getDiscussion().getId());
-        response.setParentId(comment.getParent().getId());
+        response.setPublisherId(comment.getPublisher().getId());
+        if(comment.getDiscussion() != null) {
+            response.setDiscussionId(comment.getDiscussion().getId());
+        } else {
+            response.setParentId(comment.getParent().getId());
+        }
         response.setCreated(comment.getCreated());
         response.setUpdated(comment.getUpdated());
+        try {
+            final UUID pub = this.publisherRepository.getIdByOriginalId(facade.getOriginalId());
+            response.setLiked(comment.getLikers().contains(pub));
+        } catch (ClassCastException e) {
+            response.setLiked(false);
+        }
         response.setReplies(comment.getReplies().stream().map(this::toResponse).collect(Collectors.toList()));
         return response;
     }

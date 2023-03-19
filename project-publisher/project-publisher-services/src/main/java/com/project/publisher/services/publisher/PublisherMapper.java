@@ -36,7 +36,15 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         response.setFirstName(publisher.getFirstName());
         response.setLastName(publisher.getLastName());
         response.setBio(publisher.getBio());
-        response.setPosts(publisher.getDiscussions().stream().map(discussionMapper::toResponse).collect(Collectors.toList()));
+        response.setDiscussions(publisher.getDiscussions().stream().map(discussionMapper::toResponse).sorted((o1, o2) -> {
+            if (o1.getCreated().isAfter(o2.getCreated())){
+                return -1;
+            } else if (o1.getCreated().isBefore(o2.getCreated())) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }).collect(Collectors.toList()));
         response.setCreated(publisher.getCreated());
         response.setUpdated(publisher.getUpdated());
         return response;

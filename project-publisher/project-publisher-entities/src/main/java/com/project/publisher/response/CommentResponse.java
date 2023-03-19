@@ -16,4 +16,5 @@ public class CommentResponse extends BaseResponse {
     private UUID discussionId;
     private UUID parentId;
     private List<CommentResponse> replies;
+    private boolean isLiked;
 }

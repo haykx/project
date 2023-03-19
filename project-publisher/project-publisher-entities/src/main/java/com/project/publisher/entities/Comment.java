@@ -1,9 +1,10 @@
 package com.project.publisher.entities;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -13,6 +14,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -36,6 +38,21 @@ public class Comment extends BaseEntity {
 
     @Column(name = "likes", nullable = false)
     private int likes;
+
+    @ElementCollection
+    @CollectionTable(name="t_like_comment", joinColumns=@JoinColumn(name="comment_id"))
+    @Column(name="publisher_id")
+    private List<UUID> likers = new ArrayList<>();
     @OneToMany(mappedBy = "parent")
     private List<Comment> replies = new ArrayList<>();
+
+    public void like(UUID pubId) {
+        this.likes++;
+        this.likers.add(pubId);
+    }
+
+    public void unlike(UUID pubId) {
+        this.likes--;
+        this.likers.remove(pubId);
+    }
 }
