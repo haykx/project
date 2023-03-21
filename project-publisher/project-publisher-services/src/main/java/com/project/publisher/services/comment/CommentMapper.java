@@ -49,6 +49,7 @@ public class CommentMapper implements Mapper<CommentRequest, Comment, CommentRes
         response.setText(comment.getText());
         response.setLikes(comment.getLikes());
         response.setPublisherId(comment.getPublisher().getId());
+        response.setPublisherName(comment.getPublisher().getFullName());
         if(comment.getDiscussion() != null) {
             response.setDiscussionId(comment.getDiscussion().getId());
         } else {
@@ -62,6 +63,11 @@ public class CommentMapper implements Mapper<CommentRequest, Comment, CommentRes
         } catch (ClassCastException e) {
             response.setLiked(false);
         }
+        return response;
+    }
+
+    public CommentResponse toGetResponse(Comment comment) {
+        CommentResponse response = this.toResponse(comment);
         response.setReplies(comment.getReplies().stream().map(this::toResponse).collect(Collectors.toList()));
         return response;
     }

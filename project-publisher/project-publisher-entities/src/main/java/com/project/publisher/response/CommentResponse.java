@@ -13,6 +13,7 @@ public class CommentResponse extends BaseResponse {
     private String text;
     private int likes;
     private UUID publisherId;
+    private String publisherName;
     private UUID discussionId;
     private UUID parentId;
     private List<CommentResponse> replies;

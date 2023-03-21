@@ -14,6 +14,7 @@ public class DiscussionResponse extends BaseResponse {
     private String link;
     private int likes;
     private UUID publisherId;
+    private String publisherName;
     private List<CommentResponse> comments;
     private boolean isLiked;
 }

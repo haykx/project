@@ -52,6 +52,7 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
         response.setId(discussion.getId());
         response.setQuestion(discussion.getQuestion());
         response.setPublisherId(discussion.getPublisher().getId());
+        response.setPublisherName(discussion.getPublisher().getFullName());
         response.setLink(discussion.getLink());
         response.setBody(discussion.getBody());
         response.setCreated(discussion.getCreated());

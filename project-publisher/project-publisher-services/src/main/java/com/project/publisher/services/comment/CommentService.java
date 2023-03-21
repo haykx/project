@@ -29,7 +29,7 @@ public class CommentService {
     }
 
     public CommentResponse get(final UUID id) {
-        return this.mapper.toResponse(this.repository.findById(id).orElseThrow(() -> new NotFoundException(id)));
+        return this.mapper.toGetResponse(this.repository.findById(id).orElseThrow(() -> new NotFoundException(id)));
     }
 
     @Transactional
