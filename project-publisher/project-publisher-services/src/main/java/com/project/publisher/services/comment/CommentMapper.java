@@ -50,6 +50,7 @@ public class CommentMapper implements Mapper<CommentRequest, Comment, CommentRes
         response.setLikes(comment.getLikes());
         response.setPublisherId(comment.getPublisher().getId());
         response.setPublisherName(comment.getPublisher().getFullName());
+        response.setReplyCount(comment.getReplies().size());
         if(comment.getDiscussion() != null) {
             response.setDiscussionId(comment.getDiscussion().getId());
         } else {
