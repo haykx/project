@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DiscussionResponse extends BaseResponse {
+public class DiscussionResponse extends PublicationResponse {
     private String question;
     private String body;
     private String link;

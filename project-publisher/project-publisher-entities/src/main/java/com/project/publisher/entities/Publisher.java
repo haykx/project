@@ -30,6 +30,9 @@ public class Publisher extends BaseEntity {
     @OneToMany(mappedBy = "publisher")
     private List<Discussion> discussions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "publisher")
+    private List<Survey> surveys = new ArrayList<>();
+
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }

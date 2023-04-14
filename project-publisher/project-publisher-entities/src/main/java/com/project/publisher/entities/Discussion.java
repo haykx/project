@@ -21,7 +21,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_discussions")
-public class Discussion extends BaseEntity {
+public class Discussion extends Publication {
 
     @Column(name = "question")
     private String question;
