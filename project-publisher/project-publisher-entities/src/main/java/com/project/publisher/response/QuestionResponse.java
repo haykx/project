@@ -13,4 +13,5 @@ public class QuestionResponse extends BaseResponse {
     private QuestionType type;
     private String question;
     private List<String> options;
+    private boolean required;
 }

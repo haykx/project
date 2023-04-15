@@ -2,6 +2,8 @@ package com.project.publisher.services.publication;
 
 import com.project.publisher.response.PublicationResponse;
 import com.project.publisher.services.discussion.DiscussionService;
+import com.project.publisher.services.query.DiscussionQuery;
+import com.project.publisher.services.query.SurveyQuery;
 import com.project.publisher.services.survey.SurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,8 @@ public class PublicationService {
 
     public List<PublicationResponse> getAll() {
         List<PublicationResponse> list = new ArrayList<>();
-        list.addAll(discussionService.search(null));
-        list.addAll(surveyService.search(null));
+        list.addAll(discussionService.search(new DiscussionQuery()));
+        list.addAll(surveyService.search(new SurveyQuery()));
         list.sort((o1, o2) -> {
             if (o1.getCreated().isAfter(o2.getCreated())) {
                 return -1;

@@ -3,7 +3,6 @@ package com.project.publisher.services.survey;
 import com.project.publisher.entities.Publisher;
 import com.project.publisher.entities.Survey;
 import com.project.publisher.repositories.PublisherRepository;
-import com.project.publisher.repositories.QuestionRepository;
 import com.project.publisher.request.SurveyRequest;
 import com.project.publisher.response.SurveyResponse;
 import com.project.publisher.services.mapper.Mapper;
@@ -19,7 +18,6 @@ public class SurveyMapper implements Mapper<SurveyRequest, Survey, SurveyRespons
 
     private final PublisherRepository publisherRepository;
     private final QuestionMapper questionMapper;
-    private final QuestionRepository questionRepository;
 
     @Override
     public Survey toEntity(SurveyRequest request) {
@@ -27,7 +25,6 @@ public class SurveyMapper implements Mapper<SurveyRequest, Survey, SurveyRespons
         survey.setPublisher(this.getPublisher(request));
         survey.setTitle(request.getTitle());
         survey.setBody(request.getBody());
-        survey.setQuestionnaire(request.getQuestionnaire().stream().map(q -> this.questionRepository.save(this.questionMapper.toEntity(q))).collect(Collectors.toList()));
         return survey;
     }
 
@@ -37,6 +34,8 @@ public class SurveyMapper implements Mapper<SurveyRequest, Survey, SurveyRespons
         response.setId(survey.getId());
         response.setQuestionnaire(survey.getQuestionnaire().stream().map(questionMapper::toResponse).collect(Collectors.toList()));
         response.setTitle(survey.getTitle());
+        response.setBody(survey.getBody());
+        response.setPublisherId(survey.getPublisher().getId());
         response.setCreated(survey.getCreated());
         response.setUpdated(survey.getUpdated());
         return response;

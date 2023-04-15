@@ -2,8 +2,8 @@ package com.project.publisher.enums;
 
 public enum QuestionType {
     SHORT_ANSWER,
+    RADIO,
     PARAGRAPH,
-    MULTIPLE_CHOICE,
     CHECKBOX,
     DROPDOWN,
     DATE

@@ -13,4 +13,5 @@ public class QuestionRequest {
     @NotNull
     private String question;
     private List<String> options;
+    private boolean required;
 }

@@ -14,6 +14,7 @@ public class QuestionMapper implements Mapper<QuestionRequest, Question, Questio
         question.setType(request.getType());
         question.setQuestion(request.getQuestion());
         question.setOptions(request.getOptions());
+        question.setRequired(request.isRequired());
         return question;
     }
 
@@ -24,6 +25,7 @@ public class QuestionMapper implements Mapper<QuestionRequest, Question, Questio
         response.setType(question.getType());
         response.setQuestion(question.getQuestion());
         response.setOptions(question.getOptions());
+        response.setRequired(question.isRequired());
         response.setCreated(question.getCreated());
         response.setUpdated(question.getUpdated());
         return response;
