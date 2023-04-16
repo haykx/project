@@ -11,7 +11,6 @@ import java.util.UUID;
 public class DiscussionResponse extends PublicationResponse {
     private String question;
     private String body;
-    private String link;
     private int likes;
     private UUID publisherId;
     private String publisherName;

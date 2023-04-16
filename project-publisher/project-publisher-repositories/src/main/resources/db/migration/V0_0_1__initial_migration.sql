@@ -15,7 +15,6 @@ CREATE TABLE t_discussions
     id           UUID          NOT NULL,
     question     VARCHAR(150)  NOT NULL,
     body         VARCHAR(2000) NOT NULL,
-    link         VARCHAR(150),
     likes        INT           NOT NULL,
     publisher_id UUID          NOT NULL REFERENCES t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
     created      TIMESTAMP     NOT NULL,

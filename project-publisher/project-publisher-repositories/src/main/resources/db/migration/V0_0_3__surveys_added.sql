@@ -33,7 +33,7 @@ CREATE TABLE t_surveys_participants
     id             UUID      NOT NULL,
     survey_id      UUID      NOT NULL REFERENCES t_surveys (id) ON UPDATE CASCADE ON DELETE CASCADE,
     participant_id UUID      NOT NULL REFERENCES publisher.t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    answers        JSONB     NOT NULL,
+    answers        JSON      NOT NULL,
     created        TIMESTAMP NOT NULL,
     updated        TIMESTAMP NOT NULL,
 

@@ -1,6 +1,6 @@
 package com.project.publisher.entities;
 
-import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -25,8 +25,8 @@ public class SurveyParticipants extends BaseEntity {
     @Column(name = "survey_id")
     private UUID surveyId;
 
-    @Type(JsonBinaryType.class)
+    @Type(JsonType.class)
     @Column(name = "answers")
-    private HashMap<Question, String> answers;
+    private HashMap<UUID, String> answers;
 
 }

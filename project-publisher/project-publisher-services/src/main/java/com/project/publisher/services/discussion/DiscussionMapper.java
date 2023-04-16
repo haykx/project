@@ -28,7 +28,6 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
         discussion.setPublisher(this.getPublisher(request));
         discussion.setQuestion(request.getQuestion());
         discussion.setBody(request.getBody());
-        discussion.setLink(request.getLink());
         discussion.setLikes(0);
         return discussion;
     }
@@ -53,7 +52,6 @@ public class DiscussionMapper implements Mapper<DiscussionRequest, Discussion, D
         response.setQuestion(discussion.getQuestion());
         response.setPublisherId(discussion.getPublisher().getId());
         response.setPublisherName(discussion.getPublisher().getFullName());
-        response.setLink(discussion.getLink());
         response.setBody(discussion.getBody());
         response.setCreated(discussion.getCreated());
         response.setLikes(discussion.getLikes());

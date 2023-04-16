@@ -13,5 +13,4 @@ public class DiscussionRequest {
     private String question;
     @NotNull
     private String body;
-    private String link;
 }

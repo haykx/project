@@ -6,7 +6,6 @@ import com.project.publisher.response.PublisherResponse;
 import com.project.publisher.services.publisher.PublisherService;
 import com.project.publisher.services.query.PublisherQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +33,6 @@ public class PublisherEndpoint {
         return this.service.add(request);
     }
 
-    @PreAuthorize("hasAuthority('PUBLISHER_CAN_DO_EVERYTHING')")
     @GetMapping("/{id}")
     public PublisherResponse get(@PathVariable("id")final UUID id){
         return this.service.get(id);

@@ -57,7 +57,6 @@ public class DiscussionService implements PublicationService {
         Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setQuestion);
         Optional.ofNullable(dto.getHeadline()).ifPresent(discussion::setQuestion);
         Optional.ofNullable(dto.getBody()).ifPresent(discussion::setBody);
-        Optional.ofNullable(dto.getLink()).ifPresent(discussion::setLink);
         return this.mapper.toResponse(this.repository.save(discussion));
     }
 

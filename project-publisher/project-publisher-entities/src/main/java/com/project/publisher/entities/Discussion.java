@@ -29,9 +29,6 @@ public class Discussion extends Publication {
     @Column(name = "body")
     private String body;
 
-    @Column(name = "link")
-    private String link;
-
     @Column(name = "likes")
     private int likes;
 
