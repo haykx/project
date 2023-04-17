@@ -50,7 +50,7 @@ public class PublisherService implements UserService {
         Publisher publisher = this.repository.findById(id).orElseThrow();
         Optional.ofNullable(dto.getFirstName()).ifPresent(publisher::setFirstName);
         Optional.ofNullable(dto.getLastName()).ifPresent(publisher::setLastName);
-        Optional.ofNullable(dto.getBio()).ifPresent(publisher::setBio);
+        Optional.ofNullable(dto.getDateOfBirth()).ifPresent(publisher::setDateOfBirth);
         return this.mapper.toResponse(this.repository.save(publisher));
     }
 

@@ -3,6 +3,7 @@ package com.project.publisher.response;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -10,7 +11,7 @@ import java.util.List;
 public class PublisherResponse extends BaseResponse {
     private String firstName;
     private String lastName;
-    private String bio;
+    private LocalDate dateOfBirth;
     private List<DiscussionResponse> discussions;
 
 }

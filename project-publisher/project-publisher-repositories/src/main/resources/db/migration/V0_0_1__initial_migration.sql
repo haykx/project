@@ -1,12 +1,12 @@
 CREATE table t_publishers
 (
-    id          UUID         NOT NULL,
-    original_id UUID         NOT NULL UNIQUE,
-    first_name  VARCHAR(50)  NOT NULL,
-    last_name   VARCHAR(50)  NOT NULL,
-    bio         VARCHAR(100) NOT NULL,
-    created     TIMESTAMP    NOT NULL,
-    updated     TIMESTAMP    NOT NULL,
+    id            UUID        NOT NULL,
+    original_id   UUID        NOT NULL UNIQUE,
+    first_name    VARCHAR(50) NOT NULL,
+    last_name     VARCHAR(50) NOT NULL,
+    date_of_birth DATE        NOT NULL,
+    created       TIMESTAMP   NOT NULL,
+    updated       TIMESTAMP   NOT NULL,
 
     PRIMARY KEY (id)
 );
@@ -24,14 +24,14 @@ CREATE TABLE t_discussions
 );
 CREATE TABLE t_comments
 (
-    id           UUID         NOT NULL,
-    text         VARCHAR(300) NOT NULL,
-    discussion_id      UUID REFERENCES t_discussions (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    publisher_id UUID REFERENCES t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    parent_id    UUID REFERENCES t_comments (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    likes        INT          NOT NULL,
-    created      TIMESTAMP    NOT NULL,
-    updated      TIMESTAMP    NOT NULL,
+    id            UUID         NOT NULL,
+    text          VARCHAR(300) NOT NULL,
+    discussion_id UUID REFERENCES t_discussions (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    publisher_id  UUID REFERENCES t_publishers (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    parent_id     UUID REFERENCES t_comments (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    likes         INT          NOT NULL,
+    created       TIMESTAMP    NOT NULL,
+    updated       TIMESTAMP    NOT NULL,
 
     PRIMARY KEY (id),
     CHECK ( (discussion_id IS NULL AND parent_id IS NOT NULL) OR (discussion_id IS NOT NULL AND parent_id IS NULL) )

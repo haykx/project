@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,8 +26,8 @@ public class Publisher extends BaseEntity {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "bio")
-    private String bio;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
     @OneToMany(mappedBy = "publisher")
     private List<Discussion> discussions = new ArrayList<>();
 

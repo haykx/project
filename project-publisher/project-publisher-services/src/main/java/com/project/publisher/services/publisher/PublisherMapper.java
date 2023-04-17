@@ -23,7 +23,7 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         Publisher publisher = new Publisher();
         publisher.setFirstName(request.getFirstName());
         publisher.setLastName(request.getLastName());
-        publisher.setBio(request.getBio());
+        publisher.setDateOfBirth(request.getDateOfBirth());
         publisher.setOriginalId(facade.getOriginalId());
         return publisher;
     }
@@ -35,9 +35,9 @@ public class PublisherMapper implements Mapper<PublisherRequest, Publisher, Publ
         response.setId(publisher.getId());
         response.setFirstName(publisher.getFirstName());
         response.setLastName(publisher.getLastName());
-        response.setBio(publisher.getBio());
+        response.setDateOfBirth(publisher.getDateOfBirth());
         response.setDiscussions(publisher.getDiscussions().stream().map(discussionMapper::toResponse).sorted((o1, o2) -> {
-            if (o1.getCreated().isAfter(o2.getCreated())){
+            if (o1.getCreated().isAfter(o2.getCreated())) {
                 return -1;
             } else if (o1.getCreated().isBefore(o2.getCreated())) {
                 return 1;
