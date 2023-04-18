@@ -7,8 +7,10 @@ import com.project.publisher.request.PublisherRequest;
 import com.project.publisher.request.PublisherUpdateDto;
 import com.project.publisher.response.PublisherResponse;
 import com.project.publisher.services.exceptions.BadRequestException;
+import com.project.publisher.services.exceptions.NotFoundException;
 import com.project.publisher.services.query.PublisherQuery;
 import com.project.publisher.services.specification.PublisherSpecificationBuilder;
+import com.project.publisher.services.token.AuthFacade;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,7 @@ public class PublisherService implements UserService {
 
     private final PublisherMapper mapper;
     private final PublisherSpecificationBuilder specificationBuilder;
+    private final AuthFacade facade;
     private final PublisherRepository repository;
 
     @Override
@@ -66,5 +69,9 @@ public class PublisherService implements UserService {
     @Override
     public void delete(final UUID id) {
         this.repository.deleteById(id);
+    }
+
+    public PublisherResponse me() {
+        return this.mapper.toResponse(this.repository.findByOriginalId(this.facade.getOriginalId()).orElseThrow(()->new NotFoundException("")));
     }
 }
