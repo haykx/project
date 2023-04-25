@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class JwtTokenService implements TokenService<PublisherPrincipal> {
     @Value("${jwt.secret}")
     private String secret;
-
     @Value("${jwt.expiration}")
     private Long expiration;
     private final UmPublisherRepository repository;
@@ -70,7 +69,7 @@ public class JwtTokenService implements TokenService<PublisherPrincipal> {
 
     }
 
-    private Date calculateExpirationDate(Date createdDate, long multiplier) {
-        return new Date(createdDate.getTime() + expiration * multiplier);
+    private Date calculateExpirationDate(Date createdDate, long cf) {
+        return new Date(createdDate.getTime() + expiration * cf);
     }
 }

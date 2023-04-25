@@ -6,6 +6,7 @@ import com.project.entities.response.PublisherResponse;
 import com.project.services.publisher.PublisherService;
 import com.project.services.query.PublisherQuery;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class PublisherEndpoint {
 
     @PostMapping
     public PublisherResponse add(@RequestBody(required = false)final PublisherRequest request){
+        log.info("attempted add/sign by {}", request.getFirstName());
         return this.service.add(request);
     }
 

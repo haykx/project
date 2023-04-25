@@ -3,6 +3,7 @@ package com.project.services.token;
 import com.project.entities.reg.PublisherPrincipal;
 import com.project.services.exceptions.TokenExpiredException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,10 +23,13 @@ public class JwtUtil {
   public static String TOKEN_PREFIX = "Bearer ";
 
   public PublisherPrincipal getPrincipalFromToken(final String token){
-    final Claims claims = getAllClaimsFromToken(token);
-    if(this.isTokenExpired(claims)){
+    final Claims claims;
+    try {
+      claims = getAllClaimsFromToken(token);
+    } catch (ExpiredJwtException e){
       throw new TokenExpiredException();
     }
+
     final UUID id = UUID.fromString(this.getIdFromToken(claims));
     final String username = this.getUsernameFromToken(claims);
     final Set<SimpleGrantedAuthority> permissions = this.getPermissions(claims);
