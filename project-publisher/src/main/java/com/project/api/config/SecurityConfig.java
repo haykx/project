@@ -54,8 +54,8 @@ public class SecurityConfig {
                 .authenticationEntryPoint(entryPoint)
                 .and()
                 .authenticationProvider(authProvider)
-                .addFilter(new UserAuthenticationFilter(tokenService, userDetailsService, encoder))
                 .addFilterBefore(new UserAuthorizationFilter(jwtUtil), UserAuthenticationFilter.class)
+                .addFilter(new UserAuthenticationFilter(tokenService, userDetailsService, encoder))
                 .build();
     }
 }

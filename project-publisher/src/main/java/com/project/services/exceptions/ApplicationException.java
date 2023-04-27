@@ -14,7 +14,7 @@ public class ApplicationException extends RuntimeException {
         return super.getMessage();
     }
 
-    public HttpStatus status() {
+    public HttpStatus getStatus() {
         return this.status;
     }
 }

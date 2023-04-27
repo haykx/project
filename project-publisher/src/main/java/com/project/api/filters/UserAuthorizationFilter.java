@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,28 +19,28 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RequiredArgsConstructor
 public class UserAuthorizationFilter extends OncePerRequestFilter {
-  private final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-  @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-    if (request.getServletPath().equals("api/v1/login")) {
-      filterChain.doFilter(request, response);
-    } else {
-      String authHeader = request.getHeader(AUTHORIZATION);
-      if (authHeader != null && authHeader.startsWith(JwtUtil.TOKEN_PREFIX)) {
-        try {
-          String token = authHeader.substring(JwtUtil.TOKEN_PREFIX.length());
-          PublisherPrincipal principal = jwtUtil.getPrincipalFromToken(token);
-          UsernamePasswordAuthenticationToken authenticationToken
-                  = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
-          SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-          filterChain.doFilter(request, response);
-        } catch (Exception ex) {
-          response.sendError(FORBIDDEN.value());
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        if (request.getServletPath().endsWith("/login")) {
+            filterChain.doFilter(request, response);
+        } else {
+            String authHeader = request.getHeader(AUTHORIZATION);
+            if (authHeader != null && authHeader.startsWith(JwtUtil.TOKEN_PREFIX)) {
+                try {
+                    String token = authHeader.substring(JwtUtil.TOKEN_PREFIX.length());
+                    PublisherPrincipal principal = jwtUtil.getPrincipalFromToken(token);
+                    UsernamePasswordAuthenticationToken authenticationToken
+                            = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    filterChain.doFilter(request, response);
+                } catch (Exception ex) {
+                    response.sendError(FORBIDDEN.value());
+                }
+            } else {
+                filterChain.doFilter(request, response);
+            }
         }
-      } else {
-        filterChain.doFilter(request, response);
-      }
     }
-  }
 }
