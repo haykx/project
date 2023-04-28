@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AwsHealthCheckEndpoint {
     @GetMapping("/health")
     public String health() {
-        log.info("health is ok");
         return "OK";
     }
 }

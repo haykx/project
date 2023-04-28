@@ -1,5 +1,5 @@
 {
-  "BASE_URL": "http://localhost:8040",
-  "UM_URL": "http://localhost:8040/api/v1/um",
-  "PUBLISHER_URL": "http://localhost:8040/api/v1/publisher"
+  "BASE_URL": "http://localhost:5000",
+  "UM_URL": "http://localhost:5000/api/v1/um",
+  "PUBLISHER_URL": "http://localhost:5000/api/v1/publisher"
 }

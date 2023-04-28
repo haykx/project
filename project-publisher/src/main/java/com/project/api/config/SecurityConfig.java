@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("**/um/**", "**/health")
+                .requestMatchers("**/um/**", "**/health", "**/test")
                 .permitAll()
                 .anyRequest()
                 .permitAll()
