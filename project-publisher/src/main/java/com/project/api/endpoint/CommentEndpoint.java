@@ -20,7 +20,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/publisher/comment")
+@RequestMapping("/api/v1/publisher/comment")
 public class CommentEndpoint {
     private final CommentService service;
 

@@ -13,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/publisher/publication")
+@RequestMapping("/api/v1/publisher/publication")
 public class PublicationEndpoint {
     private final PublicationService service;
 

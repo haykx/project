@@ -34,7 +34,7 @@ function Discussion() {
                     .catch(e => console.log(e));
             })
             .catch(() => navigate('/home'));
-    }, [PUB_URL, id, navigate, token]);
+    }, [PUB_URL, id, navigate, token, setPublisher]);
 
 
     return (

@@ -14,7 +14,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/um/token")
+@RequestMapping("/api/v1/um/token")
 public class TokenEndpoint {
   private final JwtTokenService tokenService;
 

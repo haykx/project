@@ -7,7 +7,6 @@ import com.project.services.publisher.PublisherService;
 import com.project.services.query.PublisherQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/publisher/publisher")
+@RequestMapping("/api/v1/publisher/publisher")
 public class PublisherEndpoint {
 
     private final PublisherService service;
@@ -52,7 +51,6 @@ public class PublisherEndpoint {
         return this.service.update(id, dto);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
     public PublisherResponse me() {
         return this.service.me();

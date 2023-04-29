@@ -529,7 +529,7 @@ header.shadow .logo {
     width: 70%;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .comment {
@@ -570,7 +570,7 @@ header.shadow .logo {
 .add-comment {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .add-comment svg {

@@ -21,7 +21,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/publisher/survey")
+@RequestMapping("/api/v1/publisher/survey")
 public class SurveyEndpoint {
     private final SurveyService service;
 

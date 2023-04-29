@@ -24,7 +24,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/publisher/discussion")
+@RequestMapping("/api/v1/publisher/discussion")
 public class DiscussionEndpoint {
     private final DiscussionService service;
 

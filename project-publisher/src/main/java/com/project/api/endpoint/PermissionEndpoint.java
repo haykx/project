@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/um/permission")
+@RequestMapping("/api/v1/um/permission")
 public class PermissionEndpoint {
     private final PermissionService service;
 

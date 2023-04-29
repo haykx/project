@@ -23,7 +23,7 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/um/publisher")
+@RequestMapping("/api/v1/um/publisher")
 public class UmPublisherEndpoint {
     private final UmPublisherService service;
 
