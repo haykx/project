@@ -3,18 +3,18 @@ import config from '../config.json';
 
 function AddComment(props) {
 
-    const [add, setAdd] = useState();
-    const [text, setText] = useState();
-    const [scope, setScope] = useState();
-    const [parent, setParent] = useState();
+    const [add, setAdd] = useState(false);
+    const [text, setText] = useState("");
+    const [scope, setScope] = useState("");
+    const [parent, setParent] = useState({});
     const token = 'Bearer ' + localStorage.getItem('token');
     const PUB_URL = config.PUBLISHER_URL;
 
     useEffect(() => {
         setAdd(false);
         setScope(props.scope);
-        setParent(props.parent)
-    }, [props.scope, props.parent]);
+        setParent(props.parent);
+    }, [props.scope, props.parent, props.refreshAction]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -41,7 +41,9 @@ function AddComment(props) {
                 'Authorization': token
             },
             body: JSON.stringify(b)
-        }).then(() => window.location.reload(true))
+        }).then(() => {
+            props?.refreshAction()
+        })
             .catch(e => console.log(e))
 
     }

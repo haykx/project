@@ -12,7 +12,7 @@ function PublisherHome() {
     const token = "Bearer " + localStorage.getItem("token");
 
     if (!id) {
-        fetch(`${PUB_URL}/me`, {
+        fetch(`${PUB_URL}/publisher/me`, {
             headers: {
                 "Authorization": token
             }

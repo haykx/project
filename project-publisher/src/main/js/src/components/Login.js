@@ -31,8 +31,7 @@ function Login() {
                 console.log(data?.access_token);
                 localStorage.setItem('token', data?.access_token);
                 setLogged(true);
-                fetch(`${PUB_URL}/me`, {
-                    method: 'POST',
+                fetch(`${PUB_URL}/publisher/me`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

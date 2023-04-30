@@ -10,10 +10,10 @@
 }
 
 :root {
-    --container-color: rgb(42, 39, 88);
+    --container-color: #2A2758;
     --second-color: #976ff4;
     --text-color: #172317;
-    --bg-color: rgb(255, 255, 255);
+    --bg-color: #ffffff;
 }
 
 ::selection {
@@ -80,15 +80,15 @@ header.shadow .logo {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 5%;
+    padding: 18px min(3%, 20px);
     /*background: var(--container-color);*/
     box-sizing: border-box;
 }
 
 .nav div {
     height: 100%;
-    width: 20rem;
-    min-width: 265px;
+    width: 75%;
+    max-width: 400px;
     display: flex;
     justify-content: space-between;
 }
@@ -328,8 +328,9 @@ header.shadow .logo {
 /* login */
 .login-form {
     display: flex;
-    width: 600px;
-    height: 600px;
+    max-width: 600px;
+    width: 85%;
+    height: max(320px, min(600px, 80%));
     flex-direction: column;
     border-radius: 50px;
     align-items: center;
@@ -338,7 +339,7 @@ header.shadow .logo {
 }
 
 .login-form input {
-    width: 400px;
+    width: 90%;
     height: 40px;
     margin: 20px;
     border-radius: 50px;
@@ -349,7 +350,7 @@ header.shadow .logo {
 }
 
 .login-form button {
-    width: 150px;
+    width: 40%;
     height: 40px;
     margin: 20px;
     border-radius: 50px;
@@ -669,13 +670,33 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:hover {
-    background-color: var(--second-color);
+    background-color: #9380c9;
 }
 
 input[type="checkbox"]:checked:hover {
-    background-color: var(--second-color);
+    background-color: #6a48b9;
 }
 
 input[type="checkbox"]:checked {
     background-color: var(--container-color);
+}
+
+.survey {
+    align-content: center;
+}
+
+.survey button {
+    width: 45%;
+    max-width: 400px;
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    outline: none;
+    border-radius: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+    background-color: var(--container-color);
+    color: var(--bg-color);
+    border: none;
 }

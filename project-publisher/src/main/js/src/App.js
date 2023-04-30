@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useState} from "react";
-import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import {HashRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
@@ -11,6 +11,7 @@ import PostCreate from "./components/PostCreate";
 import SignUp from "./components/SignUp";
 import Survey from "./components/Survey";
 import {ApplicationContext} from "./components/ApplicationContext";
+import config from "./config.json";
 
 
 window.addEventListener('scroll', () => {
@@ -21,7 +22,21 @@ window.addEventListener('scroll', () => {
 function App() {
 
     const [logged, setLogged] = useState(!!localStorage.getItem("token"));
-    const [publisher, setPublisher] = useState(null);
+    const [publisher, setPublisher] = useState({});
+    const PUB_URL = config.PUBLISHER_URL;
+
+    if (logged && !publisher) {
+        fetch(`${PUB_URL}/publisher/me`, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        }).then(res => res.json())
+            .then(data => {
+                setPublisher(data);
+            })
+            .catch(e => console.log(e));
+    }
+
 
     return (
         <ApplicationContext.Provider value={{logged, setLogged, publisher, setPublisher}}>
@@ -29,15 +44,15 @@ function App() {
                 <Router>
                     <Header/>
                     <Routes>
-                        <Route exact path="/home/" element={<Home/>}/>
-                        <Route exact path="/home/:page" element={<Home/>}/>
-                        <Route exact path="/login" element={<Login/>}/>
-                        <Route exact path="/sign-up" element={<SignUp/>}/>
-                        <Route exact path="/discussion/:id" element={<Discussion/>}/>
-                        <Route exact path="/survey/:id" element={<Survey/>}/>
-                        <Route exact path="/publisher/:id" element={<PublisherHome/>}/>
-                        <Route exact path="/publisher/:id/post" element={<PostCreate/>}></Route>
-                        <Route path={"*"} element={<Navigate to={"/login"}/>}/>
+                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/home/:page" element={<Home/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/sign-up" element={<SignUp/>}/>
+                        <Route path="/discussion/:id" element={<Discussion/>}/>
+                        <Route path="/survey/:id" element={<Survey/>}/>
+                        <Route path="/publisher/:id" element={<PublisherHome/>}/>
+                        <Route path="/publisher/:id/new" element={<PostCreate/>}></Route>
+                        <Route path={"*"} element={logged ? <Navigate to={"/home"}/> : <Navigate to={"/login"}/>}/>
                     </Routes>
                     <Footer/>
                 </Router>

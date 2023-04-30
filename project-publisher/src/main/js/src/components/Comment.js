@@ -36,6 +36,17 @@ function Comment(props) {
         setDisplay(!display);
     };
 
+    const refresh = () => () => {
+        fetch(`${PUB_URL}/comment/${comment?.id}`, {
+            headers: {
+                Authorization: token,
+                Accept: "application/json"
+            }
+        }).then(response => response.json())
+            .then(data => setComment(data))
+            .catch(e => console.log(e));
+    };
+
     return (
         <div className={'comments'} style={{width: size + '%'}}>
             <div className={'comment'} key={comment?.id}>
@@ -58,7 +69,7 @@ function Comment(props) {
                 <button className={'show-hide-button'} style={{display: comment?.replyCount ? "flex" : "none"}}
                         onClick={showMore}>{display ? "Hide" : "Show"} {comment?.replyCount} replies
                 </button>
-                <AddComment scope={'comment'} parent={comment?.id}/>
+                <AddComment scope={'comment'} parent={comment?.id} refreshAction={refresh}/>
                 <div className={'reply-box'} style={{display: display ? "flex" : "none"}}>
                     {comment?.replies?.map((r) => (
                         <Comment comment={r} size={size}/>

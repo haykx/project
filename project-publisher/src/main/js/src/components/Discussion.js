@@ -37,6 +37,18 @@ function Discussion() {
     }, [PUB_URL, id, navigate, token, setPublisher]);
 
 
+    const refresh = () => {
+        fetch(`${PUB_URL}/discussion/${id}`, {
+            headers: token ? {
+                "Authorization": token
+            } : {}
+        })
+            .then(response => response.json())
+            .then(data => {
+                setDiscussion(data);
+            });
+    };
+
     return (
         <div className={'container'}>
             <div className={'discussion'}>
@@ -78,7 +90,7 @@ function Discussion() {
                 <h4>Comments:</h4>
             ) : null}
             {logged ? (
-                <AddComment scope={'discussion'} parent={discussion.id}/>
+                <AddComment scope={'discussion'} parent={discussion.id} refreshAction={refresh}/>
             ) : null}
             <CommentBox comments={discussion?.comments}></CommentBox>
 

@@ -7,25 +7,19 @@ function Header() {
     const {logged, setLogged, publisher, setPublisher} = useContext(ApplicationContext);
     const PUB_URL = config.PUBLISHER_URL;
     const token = "Bearer " + localStorage.getItem("token");
-    const path = "/publisher/" + publisher?.id;
 
-    const handleLogout = () => {
-        setLogged(false);
-        localStorage.clear();
-    }
-
-    const me = () => {
+    if (publisher?.id === undefined || publisher?.id == null) {
         fetch(`${PUB_URL}/publisher/me`, {
             headers: token
         }).then(res => res.json())
             .then(data => setPublisher(data))
             .catch(e => console.log(e));
-
-        return null;
     }
 
-    if (!publisher) {
-        me();
+    const handleLogout = () => {
+        setLogged(false);
+        setPublisher({});
+        localStorage.removeItem("token");
     }
 
     return (
@@ -35,7 +29,7 @@ function Header() {
                 {
                     logged ? (
                         <div>
-                            <Link className="sign-up" to={path}>My discussions</Link>
+                            <Link className="sign-up" to={"/publisher/" + publisher?.id}>My discussions</Link>
                             <Link className="login" to="/login" onClick={handleLogout}>Log Out</Link>
                         </div>
                     ) : (

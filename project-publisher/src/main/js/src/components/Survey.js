@@ -58,7 +58,10 @@ function Survey() {
             },
             body: JSON.stringify(body)
         }).then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data);
+                navigate(-1);
+            })
             .catch(e => console.log(e))
     };
 
@@ -118,16 +121,16 @@ function Survey() {
                     </div>
                 </div>
             </div>
-            <form className={"comments"} onSubmit={handleSubmit}>
+            <form className={"comments survey"} onSubmit={handleSubmit}>
                 {survey?.questionnaire?.map((question) => {
-                        switch (question?.type) {
-                            case "DROPDOWN":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        <select name={question?.id} required={question?.required}
-                                                onChange={handleInputChange}>
-                                            {question.options.map((option) =>
+                    switch (question?.type) {
+                        case "DROPDOWN":
+                            return (
+                                <div className={"comment"}>
+                                    <label htmlFor={question?.id}>{question?.question}</label>
+                                    <select name={question?.id} required={question?.required}
+                                            onChange={handleInputChange}>
+                                        {question.options.map((option) =>
                                                 (
                                                     <option>{option}</option>
                                                 )

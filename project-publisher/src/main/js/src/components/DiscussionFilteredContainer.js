@@ -8,6 +8,7 @@ function DiscussionFilteredContainer() {
     const [discussions, setDiscussions] = useState([]);
     const PUB_URL = config.PUBLISHER_URL;
 
+
     useEffect(() => {
         fetch(`${PUB_URL}/publisher/${id}`, {
             headers: {
@@ -25,7 +26,7 @@ function DiscussionFilteredContainer() {
 
             <h1 className={'your-posts'}>Your discussions</h1>
             <div className={'post container'}>
-                <Link to={`/publisher/${id}/post`}>
+                <Link to={`/publisher/${id}/new`}>
                     <div className={'post-box create'}>
                         <svg className={'create-icon'} viewBox="0 0 20 20" id="meteor-icon-kit__regular-plus"
                              fill="none" xmlns="http://www.w3.org/2000/svg">
