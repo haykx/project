@@ -11,7 +11,7 @@ function Survey() {
     const [publisher, setPublisher] = useState();
     const navigate = useNavigate();
     const {id} = useParams();
-    const token = 'Bearer ' + localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const PUB_URL = config.PUBLISHER_URL;
 
 
@@ -54,7 +54,7 @@ function Survey() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(body)
         }).then(response => response.json())
@@ -66,9 +66,14 @@ function Survey() {
     };
 
     useEffect(() => {
+
+        if (token == null) {
+            navigate("/login");
+        }
+
         fetch(`${PUB_URL}/survey/${id}`, {
             headers: {
-                "Authorization": token
+                "Authorization": 'Bearer ' + token
             }
         })
             .then(response => response.json())
@@ -76,7 +81,7 @@ function Survey() {
                 setSurvey(data);
                 fetch(`${PUB_URL}/publisher/${data.publisherId}`, {
                     headers: {
-                        "Authorization": token
+                        "Authorization": 'Bearer ' + token
                     }
                 })
                     .then(response => response.json())
@@ -121,100 +126,113 @@ function Survey() {
                     </div>
                 </div>
             </div>
-            <form className={"comments survey"} onSubmit={handleSubmit}>
-                {survey?.questionnaire?.map((question) => {
-                    switch (question?.type) {
-                        case "DROPDOWN":
-                            return (
-                                <div className={"comment"}>
-                                    <label htmlFor={question?.id}>{question?.question}</label>
-                                    <select name={question?.id} required={question?.required}
-                                            onChange={handleInputChange}>
-                                        {question.options.map((option) =>
-                                                (
-                                                    <option>{option}</option>
-                                                )
-                                            )}
-                                        </select>
-                                    </div>
-                                )
+            {
+                survey?.completed ? (
+                    <div className={"comments survey"}>
+                        <div className={"comment"}>
+                            <h2>You've already completed this quiz!</h2>
+                        </div>
+                    </div>
+                ) : (
+                    <form className={"comments survey"} onSubmit={handleSubmit}>
+                        {survey?.questionnaire?.map((question) => {
+                                switch (question?.type) {
+                                    case "DROPDOWN":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                <select name={question?.id} required={question?.required}
+                                                        onChange={handleInputChange}>
+                                                    {question.options.map((option) =>
+                                                        (
+                                                            <option>{option}</option>
+                                                        )
+                                                    )}
+                                                </select>
+                                            </div>
+                                        )
 
-                            case "RADIO":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        {question.options.map((option, i) =>
-                                            (
-                                                <div>
-                                                    <input type={"radio"} id={i} name={question?.id}
-                                                           required={question?.required} onChange={handleInputChange}/>
-                                                    <label htmlFor={i}>{option}</label>
-                                                </div>
-                                            )
-                                        )}
-                                    </div>
-                                );
+                                    case "RADIO":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                {question.options.map((option, i) =>
+                                                    (
+                                                        <div>
+                                                            <input type={"radio"} id={i} name={question?.id}
+                                                                   required={question?.required}
+                                                                   onChange={handleInputChange}/>
+                                                            <label htmlFor={i}>{option}</label>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        );
 
-                            case "SHORT_ANSWER":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question} </label>
-                                        <input name={question?.id} required={question?.required}
-                                               onChange={handleInputChange}/>
-                                    </div>
-                                );
-                            case "PARAGRAPH":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        <textarea name={question?.id} required={question?.required}
-                                                  onChange={handleInputChange}></textarea>
-                                    </div>
-                                );
-                            case "MULTIPLE_CHOICE":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        <select name={question?.id} multiple required={question?.required}
-                                                onChange={handleInputChange}>
-                                            {question.options.map((option) =>
-                                                (
-                                                    <option>{option}</option>
-                                                )
-                                            )}
-                                        </select>
-                                    </div>
-                                );
+                                    case "SHORT_ANSWER":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question} </label>
+                                                <input name={question?.id} required={question?.required}
+                                                       onChange={handleInputChange}/>
+                                            </div>
+                                        );
+                                    case "PARAGRAPH":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                <textarea name={question?.id} required={question?.required}
+                                                          onChange={handleInputChange}></textarea>
+                                            </div>
+                                        );
+                                    case "MULTIPLE_CHOICE":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                <select name={question?.id} multiple required={question?.required}
+                                                        onChange={handleInputChange}>
+                                                    {question.options.map((option) =>
+                                                        (
+                                                            <option>{option}</option>
+                                                        )
+                                                    )}
+                                                </select>
+                                            </div>
+                                        );
 
-                            case "DATE":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        <input name={question?.id} type={"date"} onChange={handleInputChange}/>
-                                    </div>
-                                );
-                            case "CHECKBOX":
-                                return (
-                                    <div className={"comment"}>
-                                        <label htmlFor={question?.id}>{question?.question}</label>
-                                        {question.options.map((option, i) =>
-                                            (
-                                                <div>
-                                                    <input type={"checkbox"} id={i} name={question?.id + " | " + option}
-                                                           onChange={handleCheckboxChange}/>
-                                                    <label htmlFor={i}>{option}</label>
-                                                </div>
-                                            )
-                                        )}
-                                    </div>
-                                );
-                            default:
-                                return null;
-                        }
-                    }
-                )}
-                <button type={"submit"}>submit</button>
-            </form>
+                                    case "DATE":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                <input name={question?.id} type={"date"} onChange={handleInputChange}/>
+                                            </div>
+                                        );
+                                    case "CHECKBOX":
+                                        return (
+                                            <div className={"comment"}>
+                                                <label htmlFor={question?.id}>{question?.question}</label>
+                                                {question.options.map((option, i) =>
+                                                    (
+                                                        <div>
+                                                            <input type={"checkbox"} id={i}
+                                                                   name={question?.id + " | " + option}
+                                                                   onChange={handleCheckboxChange}/>
+                                                            <label htmlFor={i}>{option}</label>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        );
+                                    default:
+                                        return null;
+                                }
+                            }
+                        )}
+                        <button type={"submit"}>submit</button>
+                    </form>
+                )
+            }
+
         </div>
     );
 }

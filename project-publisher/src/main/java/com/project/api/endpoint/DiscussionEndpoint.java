@@ -29,36 +29,42 @@ public class DiscussionEndpoint {
     private final DiscussionService service;
 
     @PostMapping
-    public DiscussionResponse add(@RequestBody final DiscussionRequest request){
+    public DiscussionResponse add(@RequestBody final DiscussionRequest request) {
         return this.service.add(request);
     }
 
+    @PostMapping("/{id}/like/{amount}")
+    public ResponseEntity<?> rollout(@PathVariable("id") UUID id, @PathVariable("amount") int amount) {
+        return this.service.rollout(id, amount);
+    }
+
     @GetMapping("/{id}")
-    public DiscussionResponse get(@PathVariable("id")final UUID id){
+    public DiscussionResponse get(@PathVariable("id") final UUID id) {
         return this.service.get(id);
     }
 
     @GetMapping
-    public List<DiscussionResponse> search(final DiscussionQuery query){
+    public List<DiscussionResponse> search(final DiscussionQuery query) {
         return this.service.search(query);
     }
 
     @PatchMapping
-    public DiscussionResponse update(@RequestParam("id")final UUID id, @RequestBody DiscussionUpdateDto dto){
+    public DiscussionResponse update(@RequestParam("id") final UUID id, @RequestBody DiscussionUpdateDto dto) {
         return this.service.update(id, dto);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam("id")final UUID id){
+    public void delete(@RequestParam("id") final UUID id) {
         this.service.delete(id);
     }
+
     @PostMapping("/{id}/like")
-    public ResponseEntity<?> like(@PathVariable("id")final UUID id){
+    public ResponseEntity<?> like(@PathVariable("id") final UUID id) {
         return this.service.like(id);
     }
 
     @PostMapping("/{id}/unlike")
-    public ResponseEntity<?> unlike(@PathVariable("id")final UUID id){
+    public ResponseEntity<?> unlike(@PathVariable("id") final UUID id) {
         return this.service.unlike(id);
     }
 }

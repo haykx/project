@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface SurveyParticipantsRepository extends JpaRepository<SurveyParticipants, UUID> {
     @Override
     Optional<SurveyParticipants> findById(UUID id);
+
+    boolean existsBySurveyIdAndParticipantId(UUID surveyId, UUID participantId);
 }

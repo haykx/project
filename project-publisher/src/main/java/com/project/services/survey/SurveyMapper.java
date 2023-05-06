@@ -2,14 +2,17 @@ package com.project.services.survey;
 
 import com.project.entities.model.Publisher;
 import com.project.entities.model.Survey;
-import com.project.repositories.PublisherRepository;
 import com.project.entities.request.SurveyRequest;
 import com.project.entities.response.SurveyResponse;
+import com.project.repositories.PublisherRepository;
+import com.project.repositories.SurveyParticipantsRepository;
 import com.project.services.mapper.Mapper;
 import com.project.services.question.QuestionMapper;
+import com.project.services.token.AuthFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,6 +21,8 @@ public class SurveyMapper implements Mapper<SurveyRequest, Survey, SurveyRespons
 
     private final PublisherRepository publisherRepository;
     private final QuestionMapper questionMapper;
+    private final AuthFacade facade;
+    private final SurveyParticipantsRepository surveyParticipantsRepository;
 
     @Override
     public Survey toEntity(SurveyRequest request) {
@@ -31,6 +36,12 @@ public class SurveyMapper implements Mapper<SurveyRequest, Survey, SurveyRespons
     @Override
     public SurveyResponse toResponse(Survey survey) {
         SurveyResponse response = new SurveyResponse();
+        try {
+            final UUID pubId = this.publisherRepository.getIdByOriginalId(this.facade.getOriginalId());
+            response.setCompleted(surveyParticipantsRepository.existsBySurveyIdAndParticipantId(survey.getId(), pubId));
+        } catch (Exception e) {
+            response.setCompleted(false);
+        }
         response.setId(survey.getId());
         response.setQuestionnaire(survey.getQuestionnaire().stream().map(questionMapper::toResponse).collect(Collectors.toList()));
         response.setTitle(survey.getTitle());

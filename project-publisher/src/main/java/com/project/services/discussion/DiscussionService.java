@@ -1,11 +1,11 @@
 package com.project.services.discussion;
 
 import com.project.entities.model.Discussion;
-import com.project.repositories.DiscussionRepository;
-import com.project.repositories.PublisherRepository;
 import com.project.entities.request.DiscussionRequest;
 import com.project.entities.request.DiscussionUpdateDto;
 import com.project.entities.response.DiscussionResponse;
+import com.project.repositories.DiscussionRepository;
+import com.project.repositories.PublisherRepository;
 import com.project.services.exceptions.NotFoundException;
 import com.project.services.query.DiscussionQuery;
 import com.project.services.specification.DiscussionSpecificationBuilder;
@@ -75,10 +75,18 @@ public class DiscussionService implements PublicationService {
     }
 
     @Transactional
-    public ResponseEntity<?> unlike(final UUID id){
+    public ResponseEntity<?> unlike(final UUID id) {
         Discussion discussion = this.repository.findById(id).orElseThrow(() -> new NotFoundException(id));
         UUID pubId = publisherRepository.getIdByOriginalId(facade.getOriginalId());
         discussion.unlike(pubId);
+        this.repository.save(discussion);
+        return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    public ResponseEntity<?> rollout(final UUID id, final int amount) {
+        Discussion discussion = this.repository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        discussion.setLikes(discussion.getLikes() + amount);
         this.repository.save(discussion);
         return ResponseEntity.ok().build();
     }

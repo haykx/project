@@ -13,4 +13,5 @@ public class SurveyResponse extends PublicationResponse {
     private String body;
     private List<QuestionResponse> questionnaire;
     private UUID publisherId;
+    private boolean completed;
 }
